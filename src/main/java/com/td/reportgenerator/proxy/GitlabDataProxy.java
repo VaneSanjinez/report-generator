@@ -1,5 +1,6 @@
 package com.td.reportgenerator.proxy;
 
+import com.td.reportgenerator.model.Project;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.http.HttpMethod;
@@ -12,7 +13,7 @@ public class GitlabDataProxy extends GitlabBaseProxy{
 
     public ResponseEntity<?> getAllProjects(){
         //http://localhost:9090/api/projects
-        String url = GITLABBASEURL + "projects";
+        String url = GITLAB_BASE_URL + "projects";
         RestTemplate restTemplate = new RestTemplate();
 
         ResponseEntity<?> allProjects = restTemplate.exchange(
@@ -22,6 +23,7 @@ public class GitlabDataProxy extends GitlabBaseProxy{
                 Object[].class
         );
 //        return null;
+        System.out.println(allProjects);
         return allProjects;
     }
 

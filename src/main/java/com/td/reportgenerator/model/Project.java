@@ -1,23 +1,17 @@
 package com.td.reportgenerator.model;
 
-import java.util.Date;
-
 public class Project {
 
     public String id;
     public String description;
     public String name;
-    public Date createdAt;
     public String webUrl;
-    public Date lastActivity;
 
-    public Project(String id, String description, String name, Date createdAt, String webUrl, Date lastActivity) {
+    public Project(String id, String description, String name, String webUrl) {
         this.id = id;
         this.description = description;
         this.name = name;
-        this.createdAt = createdAt;
         this.webUrl = webUrl;
-        this.lastActivity = lastActivity;
     }
 
     public Project() {
@@ -47,14 +41,6 @@ public class Project {
         this.name = name;
     }
 
-    public Date getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(Date createdAt) {
-        this.createdAt = createdAt;
-    }
-
     public String getWebUrl() {
         return webUrl;
     }
@@ -63,11 +49,4 @@ public class Project {
         this.webUrl = webUrl;
     }
 
-    public Date getLastActivity() {
-        return lastActivity;
-    }
-
-    public void setLastActivity(Date lastActivity) {
-        this.lastActivity = lastActivity;
-    }
 }

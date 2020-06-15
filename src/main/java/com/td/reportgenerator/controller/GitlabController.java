@@ -1,5 +1,6 @@
 package com.td.reportgenerator.controller;
 
+import com.td.reportgenerator.model.Project;
 import com.td.reportgenerator.proxy.GitlabDataProxy;
 import com.td.reportgenerator.service.GitLabProjectServiceImpl;
 import org.apache.coyote.Response;
@@ -25,7 +26,7 @@ public class GitlabController {
 
     @RequestMapping(value="/projects", method = RequestMethod.GET)
     public ResponseEntity<?> getAllProjects (){
-        ResponseEntity<?> projects = gitlabService.getAllProjects();
+        ResponseEntity<Project[]> projects = gitlabService.getAllProjects();
         return projects;
 
     }
