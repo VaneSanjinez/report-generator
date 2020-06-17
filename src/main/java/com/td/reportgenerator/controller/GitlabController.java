@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 //@Controller("gitlabController")
 @RestController
 @RequestMapping(value="/gitlab")
@@ -25,8 +27,8 @@ public class GitlabController {
     }
 
     @RequestMapping(value="/projects", method = RequestMethod.GET)
-    public ResponseEntity<?> getAllProjects (){
-        ResponseEntity<Project[]> projects = gitlabService.getAllProjects();
+    public List<Project> getAllProjects (){
+        List<Project> projects = gitlabService.getAllProjects();
         return projects;
 
     }
