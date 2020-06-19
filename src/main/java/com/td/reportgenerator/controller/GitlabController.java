@@ -8,9 +8,7 @@ import org.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -31,5 +29,12 @@ public class GitlabController {
         List<Project> projects = gitlabService.getAllProjects();
         return projects;
 
+    }
+
+    @RequestMapping(value = "/projects/{projectId}", method = RequestMethod.GET)
+    public Project getProjectById(@PathVariable("projectId") String projectId){
+        System.out.println("getProjectById");
+        Project project = gitlabService.getProjectById(projectId);
+        return project;
     }
 }

@@ -10,7 +10,8 @@ public interface IProjects {
 //    public ResponseEntity<?> getAllProjects();
     public List<Project> getAllProjects();
 
-    public ResponseEntity<?> getProjectById(String projectID);
+//    public ResponseEntity<?> getProjectById(String projectID);
+    public Project getProjectById(String projectID);
 
     public ResponseEntity<?> getProjectsByUsername(String username);
 }

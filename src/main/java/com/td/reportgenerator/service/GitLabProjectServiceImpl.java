@@ -1,5 +1,6 @@
 package com.td.reportgenerator.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.td.reportgenerator.interfaces.IProjects;
 import com.td.reportgenerator.model.Project;
 import com.td.reportgenerator.proxy.GitlabDataProxy;
@@ -21,13 +22,23 @@ public class GitLabProjectServiceImpl implements IProjects {
     ProjectUtil projectUtil;
 
     public List<Project> getAllProjects() {
-        ResponseEntity<?> allProjects = gitlabDataProxy.getAllProjects();
+        ResponseEntity<Object[]> allProjects = gitlabDataProxy.getAllProjects();
         System.out.println(allProjects.getBody());
-         List<Project> projectResponse = projectUtil.parseToProject(allProjects);
+        List<Project> projectResponse = projectUtil.parseToProjectArray(allProjects);
         return projectResponse;
     }
 
-    public ResponseEntity<?> getProjectById(String projectID) {
+    public Project getProjectById(String projectID) {
+        Project project = new Project();
+        ResponseEntity<String> projectResponse = gitlabDataProxy.getProjectById(projectID);
+
+        try {
+            project  = projectUtil.parseToProject(projectResponse);
+            System.out.println(project);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+//        return project;
         return null;
     }
 

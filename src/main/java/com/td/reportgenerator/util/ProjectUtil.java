@@ -14,9 +14,9 @@ import java.util.List;
 
 @Component
 public class ProjectUtil {
-    public List<Project> parseToProject(ResponseEntity<?> allProjects) {
+    public List<Project> parseToProjectArray(ResponseEntity<Object[]> allProjects) {
         System.out.println("from project util");
-        Object[] projectList = (Object[]) allProjects.getBody();
+        Object[] projectList = allProjects.getBody();
         List<Project> projectArray = new ArrayList<Project>();
         for (Object project: projectList) {
             Project projectObject = new Project();
@@ -55,5 +55,14 @@ public class ProjectUtil {
             e.printStackTrace();
         }
         return project;
+    }
+
+    public Project parseToProject(ResponseEntity<String> projectResponse) throws JsonProcessingException {
+        String projectResponseBody = projectResponse.getBody();
+        JSONObject jsonProject = responseToJSONProject(projectResponseBody);
+        Project project = jsonToProject(jsonProject);
+        System.out.println(project);
+//        return project;
+        return null;
     }
 }
