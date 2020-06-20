@@ -26,7 +26,7 @@ public class GitlabDataProxy extends GitlabBaseProxy{
         return allProjects;
     }
 
-    public ResponseEntity<String> getProjectById(String projectID) {
+    public ResponseEntity<Object> getProjectById(String projectID) {
 //        http://localhost:9090/api/projects/18625237
         String url = GITLAB_BASE_URL + "projects/" + projectID;
         String privateToken = personalToken;
@@ -36,11 +36,11 @@ public class GitlabDataProxy extends GitlabBaseProxy{
         headers.set("Private-Token",privateToken);
         HttpEntity request = new HttpEntity(headers);
         System.out.println(request);
-        ResponseEntity<String> project = restTemplate.exchange(
+        ResponseEntity<Object> project = restTemplate.exchange(
                 url,
                 HttpMethod.GET,
                 request,
-                String.class
+                Object.class
         );
         System.out.println(project.toString());
 

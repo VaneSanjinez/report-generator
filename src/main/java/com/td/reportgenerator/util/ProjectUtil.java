@@ -57,8 +57,8 @@ public class ProjectUtil {
         return project;
     }
 
-    public Project parseToProject(ResponseEntity<String> projectResponse) throws JsonProcessingException {
-        String projectResponseBody = projectResponse.getBody();
+    public Project parseToProject(ResponseEntity<Object> projectResponse) throws JsonProcessingException {
+        Object projectResponseBody = projectResponse.getBody();
         JSONObject jsonProject = responseToJSONProject(projectResponseBody);
         Project project = jsonToProject(jsonProject);
         System.out.println(project);

@@ -30,7 +30,10 @@ public class GitLabProjectServiceImpl implements IProjects {
 
     public Project getProjectById(String projectID) {
         Project project = new Project();
-        ResponseEntity<String> projectResponse = gitlabDataProxy.getProjectById(projectID);
+        ResponseEntity<Object> projectResponse = gitlabDataProxy.getProjectById(projectID);
+        System.out.println("*********************************");
+        System.out.println(projectResponse);
+        System.out.println("*********************************");
 
         try {
             project  = projectUtil.parseToProject(projectResponse);
