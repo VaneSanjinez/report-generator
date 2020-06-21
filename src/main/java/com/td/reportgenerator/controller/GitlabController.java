@@ -37,4 +37,9 @@ public class GitlabController {
         Project project = gitlabService.getProjectById(projectId);
         return project;
     }
+
+    @RequestMapping(value="/projects/users/{userId}", method = RequestMethod.GET)
+    public Project getProjectByUserID(@PathVariable("userId") String userId){
+        return null;
+    }
 }

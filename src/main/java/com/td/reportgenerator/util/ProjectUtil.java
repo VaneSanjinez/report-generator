@@ -38,10 +38,10 @@ public class ProjectUtil {
         JsonNode node = new ObjectMapper().readTree(jsonProject);
         JSONObject json = new JSONObject();
 
-        json.put("id", node.get("id").toString());
-        json.put("name", node.get("name").toString());
-        json.put("description", node.get("description").toString());
-        json.put("webUrl", node.get("web_url").toString());
+        json.put("id", node.get("id"));
+        json.put("name", node.get("name").asText());
+        json.put("description", node.get("description").asText());
+        json.put("webUrl", node.get("web_url").asText());
 
         return json;
     }
@@ -61,8 +61,7 @@ public class ProjectUtil {
         Object projectResponseBody = projectResponse.getBody();
         JSONObject jsonProject = responseToJSONProject(projectResponseBody);
         Project project = jsonToProject(jsonProject);
-        System.out.println(project);
-//        return project;
-        return null;
+        System.out.println(project.getId() + " " +project.getDescription() + " "+ project.getName()  +" "+project.getName());
+        return project;
     }
 }
