@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -39,7 +38,9 @@ public class GitLabProjectServiceImpl implements IProjects {
         return project;
     }
 
-    public ResponseEntity<?> getProjectsByUsername(String username) {
-        return null;
+    public List<Project> getProjectsByUsername(String username) {
+        ResponseEntity<Object[]> projectsByUserId = gitlabDataProxy.getProjectsByUserId(username);
+        List<Project> projects = projectUtil.parseToProjectArray(projectsByUserId);
+        return projects;
     }
 }

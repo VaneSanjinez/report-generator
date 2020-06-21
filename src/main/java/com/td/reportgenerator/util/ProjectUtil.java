@@ -14,10 +14,10 @@ import java.util.List;
 
 @Component
 public class ProjectUtil {
+
     public List<Project> parseToProjectArray(ResponseEntity<Object[]> allProjects) {
-        System.out.println("from project util");
         Object[] projectList = allProjects.getBody();
-        List<Project> projectArray = new ArrayList<Project>();
+        List<Project> projectArray = new ArrayList<>();
         for (Object project: projectList) {
             Project projectObject = new Project();
             try {
@@ -27,9 +27,15 @@ public class ProjectUtil {
             }
             projectArray.add(projectObject);
         }
-        System.out.println("after for bucle size: " + projectArray.size());
 
         return projectArray;
+    }
+
+    public Project parseToProject(ResponseEntity<Object> projectResponse) throws JsonProcessingException {
+        Object projectResponseBody = projectResponse.getBody();
+        JSONObject jsonProject = responseToJSONProject(projectResponseBody);
+        Project project = jsonToProject(jsonProject);
+        return project;
     }
 
     private JSONObject responseToJSONProject (Object project) throws JsonProcessingException {
@@ -54,14 +60,6 @@ public class ProjectUtil {
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
-        return project;
-    }
-
-    public Project parseToProject(ResponseEntity<Object> projectResponse) throws JsonProcessingException {
-        Object projectResponseBody = projectResponse.getBody();
-        JSONObject jsonProject = responseToJSONProject(projectResponseBody);
-        Project project = jsonToProject(jsonProject);
-        System.out.println(project.getId() + " " +project.getDescription() + " "+ project.getName()  +" "+project.getName());
         return project;
     }
 }

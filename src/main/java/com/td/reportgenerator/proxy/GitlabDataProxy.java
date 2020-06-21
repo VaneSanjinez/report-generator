@@ -1,8 +1,7 @@
 package com.td.reportgenerator.proxy;
 
-import com.td.reportgenerator.model.Project;
-import org.json.JSONArray;
-import org.json.JSONObject;
+import com.td.reportgenerator.util.GitlabUtil;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
@@ -10,18 +9,21 @@ import org.springframework.web.client.RestTemplate;
 @Component
 public class GitlabDataProxy extends GitlabBaseProxy{
 
+    @Autowired
+    GitlabUtil gitlabUtil;
+
+    String privateToken = personalToken;
+    RestTemplate restTemplate = new RestTemplate();
+
     public ResponseEntity<Object []> getAllProjects(){
         //http://localhost:9090/api/projects
         String url = GITLAB_BASE_URL + "projects";
-        RestTemplate restTemplate = new RestTemplate();
-
         ResponseEntity<Object[]> allProjects = restTemplate.exchange(
                 url,
                 HttpMethod.GET,
                 null,
                 Object[].class
         );
-//        return null;
         System.out.println(allProjects);
         return allProjects;
     }
@@ -29,21 +31,26 @@ public class GitlabDataProxy extends GitlabBaseProxy{
     public ResponseEntity<Object> getProjectById(String projectID) {
 //        http://localhost:9090/api/projects/18625237
         String url = GITLAB_BASE_URL + "projects/" + projectID;
-        String privateToken = personalToken;
-        RestTemplate restTemplate = new RestTemplate();
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
-        headers.set("Private-Token",privateToken);
-        HttpEntity request = new HttpEntity(headers);
-        System.out.println(request);
+        HttpEntity request = gitlabUtil.declareTemplate(privateToken);
         ResponseEntity<Object> project = restTemplate.exchange(
                 url,
                 HttpMethod.GET,
                 request,
                 Object.class
         );
-        System.out.println(project.toString());
-
         return project;
+    }
+
+    public ResponseEntity<Object[]> getProjectsByUserId(String userId) {
+//        http://localhost:9090/api/projects/users/vane-sanjinez?private_token=cxXdxSAm8KmZZe7RZ7i6
+        String url = GITLAB_BASE_URL + "projects/users/" + userId;
+        HttpEntity request = gitlabUtil.declareTemplate(privateToken);
+        ResponseEntity<Object[]> projectsByUserId = restTemplate.exchange(
+                url,
+                HttpMethod.GET,
+                request,
+                Object[].class
+        );
+        return projectsByUserId;
     }
 }

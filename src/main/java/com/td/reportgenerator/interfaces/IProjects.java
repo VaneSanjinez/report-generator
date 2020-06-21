@@ -6,12 +6,9 @@ import org.springframework.http.ResponseEntity;
 import java.util.List;
 
 public interface IProjects {
-//    public ResponseEntity<Project[]> getAllProjects();
-//    public ResponseEntity<?> getAllProjects();
-    public List<Project> getAllProjects();
+    List<Project> getAllProjects();
 
-//    public ResponseEntity<?> getProjectById(String projectID);
-    public Project getProjectById(String projectID);
+    Project getProjectById(String projectID);
 
-    public ResponseEntity<?> getProjectsByUsername(String username);
+    List<Project> getProjectsByUsername(String username);
 }

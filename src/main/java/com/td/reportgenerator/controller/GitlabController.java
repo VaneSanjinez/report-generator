@@ -1,13 +1,8 @@
 package com.td.reportgenerator.controller;
 
 import com.td.reportgenerator.model.Project;
-import com.td.reportgenerator.proxy.GitlabDataProxy;
 import com.td.reportgenerator.service.GitLabProjectServiceImpl;
-import org.apache.coyote.Response;
-import org.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -33,13 +28,13 @@ public class GitlabController {
 
     @RequestMapping(value = "/projects/{projectId}", method = RequestMethod.GET)
     public Project getProjectById(@PathVariable("projectId") String projectId){
-        System.out.println("getProjectById");
         Project project = gitlabService.getProjectById(projectId);
         return project;
     }
 
     @RequestMapping(value="/projects/users/{userId}", method = RequestMethod.GET)
-    public Project getProjectByUserID(@PathVariable("userId") String userId){
-        return null;
+    public List<Project> getProjectByUserID(@PathVariable("userId") String userId){
+        List<Project> projects = gitlabService.getProjectsByUsername(userId);
+        return projects;
     }
 }
