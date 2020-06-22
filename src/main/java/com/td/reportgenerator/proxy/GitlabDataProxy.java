@@ -14,10 +14,12 @@ public class GitlabDataProxy extends GitlabBaseProxy{
 
     String privateToken = personalToken;
     RestTemplate restTemplate = new RestTemplate();
+//    HttpEntity request = gitlabUtil.declareTemplate(privateToken);
 
     public ResponseEntity<Object []> getAllProjects(){
         //http://localhost:9090/api/projects
         String url = GITLAB_BASE_URL + "projects";
+        HttpEntity request = gitlabUtil.declareTemplate(privateToken);
         ResponseEntity<Object[]> allProjects = restTemplate.exchange(
                 url,
                 HttpMethod.GET,
@@ -52,5 +54,20 @@ public class GitlabDataProxy extends GitlabBaseProxy{
                 Object[].class
         );
         return projectsByUserId;
+    }
+
+    public ResponseEntity<Object[]> getAllCommitsByProjectId(String projectId){
+//        http://localhost:9090/api/commits/{projectId}
+        String url = GITLAB_BASE_URL + "commits/" + projectId;
+        HttpEntity request = gitlabUtil.declareTemplate(privateToken);
+        ResponseEntity<Object[]> commitsByProjectId = restTemplate.exchange(
+                url,
+                HttpMethod.GET,
+                request,
+                Object[].class
+        );
+
+        System.out.println(commitsByProjectId.getBody());
+        return null;
     }
 }
