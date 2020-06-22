@@ -42,13 +42,23 @@ public class ProjectUtil {
         ObjectMapper mapper = new ObjectMapper();
         String jsonProject = mapper.writeValueAsString(project);
         JsonNode node = new ObjectMapper().readTree(jsonProject);
+
         JSONObject json = new JSONObject();
 
-        json.put("id", node.get("id"));
-        json.put("name", node.get("name").asText());
-        json.put("description", node.get("description").asText());
-        json.put("webUrl", node.get("web_url").asText());
+        //validate if object comming from bitbucket
+        if(node.has("values")){
+            JsonNode child = node.get("values");
+            json.put("id", child.get("id").asText());
+            json.put("name", child.get("name").asText());
+            json.put("description", child.get("description").asText());
+            json.put("webUrl", child.path("link").get("url").asText());
 
+        }else{ //github and gitlab
+            json.put("id", node.get("id"));
+            json.put("name", node.get("name").asText());
+            json.put("description", verifyDescription(node));
+            json.put("webUrl", node.get("web_url").asText());
+        }
         return json;
     }
 
@@ -61,5 +71,20 @@ public class ProjectUtil {
             e.printStackTrace();
         }
         return project;
+    }
+
+    private String verifyDescription (JsonNode project){
+        String projectDescription = null;
+        if(project.has("description")){
+            projectDescription = project.get("description").asText();
+        }else if(project.has("body")) {
+            projectDescription = project.get("body").asText();
+        }
+        //TODO check value before return asText to avoid compare with null as string
+        if(projectDescription == "null"){
+            projectDescription = "";
+        }
+
+        return projectDescription;
     }
 }
