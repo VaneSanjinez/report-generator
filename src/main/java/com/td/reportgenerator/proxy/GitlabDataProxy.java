@@ -14,8 +14,8 @@ public class GitlabDataProxy extends GitlabBaseProxy{
 
     String privateToken = personalToken;
     RestTemplate restTemplate = new RestTemplate();
-//    HttpEntity request = gitlabUtil.declareTemplate(privateToken);
 
+    //Projects
     public ResponseEntity<Object []> getAllProjects(){
         //http://localhost:9090/api/projects
         String url = GITLAB_BASE_URL + "projects";
@@ -56,6 +56,7 @@ public class GitlabDataProxy extends GitlabBaseProxy{
         return projectsByUserId;
     }
 
+    //Commits
     public ResponseEntity<Object[]> getAllCommitsByProjectId(String projectId){
 //        http://localhost:9090/api/commits/{projectId}
         String url = GITLAB_BASE_URL + "commits/" + projectId;

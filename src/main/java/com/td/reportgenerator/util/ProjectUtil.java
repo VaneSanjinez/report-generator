@@ -8,7 +8,6 @@ import org.json.JSONObject;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,7 +21,7 @@ public class ProjectUtil {
             Project projectObject = new Project();
             try {
                 projectObject = this.jsonToProject(this.responseToJSONProject(project));
-            } catch (IOException e) {
+            } catch (JsonProcessingException e) {
                 e.printStackTrace();
             }
             projectArray.add(projectObject);
@@ -57,7 +56,9 @@ public class ProjectUtil {
             json.put("id", node.get("id"));
             json.put("name", node.get("name").asText());
             json.put("description", verifyDescription(node));
-            json.put("webUrl", node.get("web_url").asText());
+//            json.put("webUrl", node.get("web_url").asText());
+            json.put("webUrl", (node.has("web_url"))? node.get("web_url").asText():
+                                node.has("url")? node.get("url").asText():null);
         }
         return json;
     }
@@ -76,15 +77,20 @@ public class ProjectUtil {
     private String verifyDescription (JsonNode project){
         String projectDescription = null;
         if(project.has("description")){
-            projectDescription = project.get("description").asText();
+            projectDescription = validateDescriptionContent(project.get("description"));
         }else if(project.has("body")) {
-            projectDescription = project.get("body").asText();
+            projectDescription = validateDescriptionContent(project.get("body"));
         }
-        //TODO check value before return asText to avoid compare with null as string
-        if(projectDescription == "null"){
-            projectDescription = "";
-        }
-
         return projectDescription;
+    }
+
+    private String validateDescriptionContent(JsonNode field){
+        String fieldValidated = null;
+        if(field == null || field.asText().equals("null")){
+            fieldValidated = "";
+        }else{
+            fieldValidated = field.asText();
+        }
+        return fieldValidated;
     }
 }
