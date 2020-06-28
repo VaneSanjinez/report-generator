@@ -1,9 +1,12 @@
 package com.td.reportgenerator.interfaces;
 
+import com.td.reportgenerator.model.Commit;
 import org.springframework.http.ResponseEntity;
+
+import java.util.List;
 
 
 public interface ICommits {
 
-    ResponseEntity<?> getAllProjectCommits(String projectId);
+    List<Commit> getAllProjectCommits(String projectId);
 }

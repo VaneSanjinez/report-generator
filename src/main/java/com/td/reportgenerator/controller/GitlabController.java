@@ -1,5 +1,6 @@
 package com.td.reportgenerator.controller;
 
+import com.td.reportgenerator.model.Commit;
 import com.td.reportgenerator.model.Project;
 import com.td.reportgenerator.service.GitlabCommitServiceImpl;
 import com.td.reportgenerator.service.GitlabProjectServiceImpl;
@@ -49,10 +50,10 @@ public class GitlabController {
 
 //    Commits controller
     @RequestMapping(value="/commits/{projectId}", method = RequestMethod.GET)
-    public List<Object> getCommitsByProjectId(@PathVariable("projectId") String projectId){
-        ResponseEntity<?> commitsByProjectId = gitlabCommitService.getAllProjectCommits(projectId);
-
-        return null;
+    public List<Commit> getCommitsByProjectId(@PathVariable("projectId") String projectId){
+        List<Commit> commitsByProjectId = gitlabCommitService.getAllProjectCommits(projectId);
+        return commitsByProjectId;
+//        return null;
      }
 
 }

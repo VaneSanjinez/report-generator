@@ -1,13 +1,11 @@
 package com.td.reportgenerator.model;
 
-import java.util.Date;
-
 public class Commit {
 
     public String id;
     public String authorName;
     public String authorEmail;
-    public Date creationDate;
+    public String creationDate;
     public String message;
     public String webUrl;
 
@@ -35,11 +33,11 @@ public class Commit {
         this.authorEmail = authorEmail;
     }
 
-    public Date getCreationDate() {
+    public String getCreationDate() {
         return creationDate;
     }
 
-    public void setCreationDate(Date creationDate) {
+    public void setCreationDate(String creationDate) {
         this.creationDate = creationDate;
     }
 
