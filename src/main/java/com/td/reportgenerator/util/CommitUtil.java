@@ -4,13 +4,12 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.td.reportgenerator.model.Commit;
-import com.td.reportgenerator.model.Project;
+import org.joda.time.DateTime;
 import org.json.JSONObject;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @Component
 public class CommitUtil {
@@ -44,16 +43,19 @@ public class CommitUtil {
         String jsonProject = mapper.writeValueAsString(commitObject);
         JsonNode node = new ObjectMapper().readTree(jsonProject);
 
+        String dateAsString = node.get("created_at").asText();
+        int position = dateAsString.indexOf('T');
+
         JSONObject json = new JSONObject();
 
         //parse to gitlab commit
         json.put("id", node.get("id"));
         json.put("authorName", node.get("author_name"));
         json.put("authorEmail", node.get("author_email"));
-        json.put("creationDate", node.get("created_at"));
+        json.put("creationDate",convert(node.get("created_at").asText()));
+
         json.put("message", node.get("message"));
         json.put("webUrl", node.get("web_url"));
-
         return json;
     }
 
@@ -68,5 +70,10 @@ public class CommitUtil {
         return commit;
     }
 
-
-}
+    public DateTime convert(String dateString) {
+        DateTime date = new DateTime();
+        date = new DateTime(dateString);
+        System.out.println("date = " + date);
+        return date;
+    }
+    }
