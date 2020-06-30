@@ -28,4 +28,9 @@ public class GitlabCommitServiceImpl implements ICommits{
         System.out.println("after calling gitlab data proxy getallcommiutsbyprojectid");
         return commits;
     }
+
+    public Object getCommitByReference(String projectId, String commitRef) {
+        ResponseEntity<Object> commitByReferenceAndProjectId = gitlabDataProxy.getCommit(projectId,commitRef);
+        return null;
+    }
 }

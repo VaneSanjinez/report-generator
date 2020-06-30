@@ -29,6 +29,7 @@ public class GitlabController {
     }
 
 //    Projects controller
+    //get all projects
     @RequestMapping(value="/projects", method = RequestMethod.GET)
     public List<Project> getAllProjects (){
         List<Project> projects = gitlabProjectService.getAllProjects();
@@ -36,12 +37,14 @@ public class GitlabController {
 
     }
 
+    //get by project id
     @RequestMapping(value = "/projects/{projectId}", method = RequestMethod.GET)
     public Project getProjectById(@PathVariable("projectId") String projectId){
         Project project = gitlabProjectService.getProjectById(projectId);
         return project;
     }
 
+//    get projects by user id
     @RequestMapping(value="/projects/users/{userId}", method = RequestMethod.GET)
     public List<Project> getProjectByUserID(@PathVariable("userId") String userId){
         List<Project> projects = gitlabProjectService.getProjectsByUsername(userId);
@@ -49,11 +52,20 @@ public class GitlabController {
     }
 
 //    Commits controller
+
+    //Get all commits from a project (by project id)
     @RequestMapping(value="/commits/{projectId}", method = RequestMethod.GET)
     public List<Commit> getCommitsByProjectId(@PathVariable("projectId") String projectId){
         List<Commit> commitsByProjectId = gitlabCommitService.getAllProjectCommits(projectId);
         return commitsByProjectId;
-//        return null;
      }
+
+     //Get commit by id,branch
+    @RequestMapping(value="/commits/{projectId}/{commitRef}", method = RequestMethod.GET)
+    public ResponseEntity<?> getCommitByReference(@PathVariable("projectId") String projectId,
+                                                  @PathVariable("commitRef") String commitRef){
+        Object commit = gitlabCommitService.getCommitByReference(projectId, commitRef);
+        return null;
+    }
 
 }

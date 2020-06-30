@@ -12,7 +12,6 @@ public class GitlabDataProxy extends GitlabBaseProxy{
     @Autowired
     GitlabUtil gitlabUtil;
 
-    private String privateToken = null;
     RestTemplate restTemplate = new RestTemplate();
 
     //Projects
@@ -70,5 +69,21 @@ public class GitlabDataProxy extends GitlabBaseProxy{
 
         System.out.println(commitsByProjectId.getBody());
         return commitsByProjectId;
+    }
+
+    public ResponseEntity<Object> getCommit(String projectId, String commitRef) {
+//        http://localhost:9090/api/commits/18625237/master
+        String url = GITLAB_BASE_URL + "commits/" + projectId + "/" + commitRef;
+        HttpEntity request = gitlabUtil.declareTemplate(personalToken);
+        ResponseEntity<Object> commitByRef = restTemplate.exchange(
+                url,
+                HttpMethod.GET,
+                request,
+                Object.class
+        );
+        System.out.println(commitByRef.getStatusCode());
+        System.out.println(commitByRef.getBody());
+        System.out.println(commitByRef.getHeaders());
+        return null;
     }
 }

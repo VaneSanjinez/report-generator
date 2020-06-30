@@ -42,10 +42,6 @@ public class CommitUtil {
         ObjectMapper mapper = new ObjectMapper();
         String jsonProject = mapper.writeValueAsString(commitObject);
         JsonNode node = new ObjectMapper().readTree(jsonProject);
-
-        String dateAsString = node.get("created_at").asText();
-        int position = dateAsString.indexOf('T');
-
         JSONObject json = new JSONObject();
 
         //parse to gitlab commit
@@ -53,7 +49,6 @@ public class CommitUtil {
         json.put("authorName", node.get("author_name"));
         json.put("authorEmail", node.get("author_email"));
         json.put("creationDate",convert(node.get("created_at").asText()));
-
         json.put("message", node.get("message"));
         json.put("webUrl", node.get("web_url"));
         return json;
@@ -71,9 +66,8 @@ public class CommitUtil {
     }
 
     public DateTime convert(String dateString) {
-        DateTime date = new DateTime();
+        DateTime date;
         date = new DateTime(dateString);
-        System.out.println("date = " + date);
         return date;
-    }
+        }
     }
