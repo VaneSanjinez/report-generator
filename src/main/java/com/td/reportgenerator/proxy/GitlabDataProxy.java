@@ -81,9 +81,6 @@ public class GitlabDataProxy extends GitlabBaseProxy{
                 request,
                 Object.class
         );
-        System.out.println(commitByRef.getStatusCode());
-        System.out.println(commitByRef.getBody());
-        System.out.println(commitByRef.getHeaders());
-        return null;
+        return commitByRef;
     }
 }

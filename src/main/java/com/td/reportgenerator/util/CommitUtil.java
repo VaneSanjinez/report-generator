@@ -14,7 +14,7 @@ import java.util.*;
 @Component
 public class CommitUtil {
 
-    public List<Commit> parseToCommitList(ResponseEntity<Object[]> commitsByProject){
+    public List<Commit> parseResponseBodyToCommitList(ResponseEntity<Object[]> commitsByProject){
         Object[] commitsByProjectBody = commitsByProject.getBody();
         List<Commit> commitList = new ArrayList<>();
         for (Object commit: commitsByProjectBody) {
@@ -31,9 +31,26 @@ public class CommitUtil {
         return commitList;
     }
 
-//    private Commit jsonToCommit(ResponseEntity<Object> commitResponse) throws JsonProcessingException {
+    public Commit parseToCommitObject(ResponseEntity<Object> commitByReferenceAndProjectId) {
+        Object commit = commitByReferenceAndProjectId.getBody();
+        JSONObject commitAsJSONObject = null;
+        try {
+            commitAsJSONObject = objectToJSONObject(commit);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        Commit commitObject = jsonObjectToCommit(commitAsJSONObject);
+        return commitObject;
+    }
+
+//    public Commit jsonToCommit(ResponseEntity<Object> commitResponse)  {
 //        Object commitResponseBody = commitResponse.getBody();
-//        JSONObject jsonCommit = objectToJSONObject(commitResponseBody);
+//        JSONObject jsonCommit = null;
+//        try {
+//            jsonCommit = objectToJSONObject(commitResponseBody);
+//        } catch (JsonProcessingException e) {
+//            e.printStackTrace();
+//        }
 //        Commit commit = jsonObjectToCommit(jsonCommit);
 //        return commit;
 //    }
@@ -45,12 +62,12 @@ public class CommitUtil {
         JSONObject json = new JSONObject();
 
         //parse to gitlab commit
-        json.put("id", node.get("id"));
-        json.put("authorName", node.get("author_name"));
-        json.put("authorEmail", node.get("author_email"));
+        json.put("id", node.get("id").asText());
+        json.put("authorName", node.get("author_name").asText());
+        json.put("authorEmail", node.get("author_email").asText());
         json.put("creationDate",convert(node.get("created_at").asText()));
-        json.put("message", node.get("message"));
-        json.put("webUrl", node.get("web_url"));
+        json.put("message", node.get("message").asText());
+        json.put("webUrl", node.get("web_url").asText());
         return json;
     }
 
@@ -65,9 +82,10 @@ public class CommitUtil {
         return commit;
     }
 
-    public DateTime convert(String dateString) {
+    private DateTime convert(String dateString) {//Use of DateTime from JodaTime library
         DateTime date;
         date = new DateTime(dateString);
         return date;
-        }
     }
+
+}

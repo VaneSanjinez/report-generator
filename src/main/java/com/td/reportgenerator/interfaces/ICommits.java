@@ -9,5 +9,5 @@ import java.util.List;
 public interface ICommits {
 
     List<Commit> getAllProjectCommits(String projectId);
-    Object getCommitByReference(String projectId, String commitRef);
+    Commit getCommitByReference(String projectId, String commitRef);
 }

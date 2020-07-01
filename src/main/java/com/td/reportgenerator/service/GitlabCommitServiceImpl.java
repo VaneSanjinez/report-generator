@@ -23,14 +23,13 @@ public class GitlabCommitServiceImpl implements ICommits{
 
     public List<Commit> getAllProjectCommits(String projectId) {
         ResponseEntity<Object[]> allCommitsByProjectId = gitlabDataProxy.getAllCommitsByProjectId(projectId);
-        List<Commit> commits = commitUtil.parseToCommitList(allCommitsByProjectId);
-//        System.out.println(allCommitsByProjectId.getBody());
-        System.out.println("after calling gitlab data proxy getallcommiutsbyprojectid");
+        List<Commit> commits = commitUtil.parseResponseBodyToCommitList(allCommitsByProjectId);
         return commits;
     }
 
-    public Object getCommitByReference(String projectId, String commitRef) {
+    public Commit getCommitByReference(String projectId, String commitRef) {
         ResponseEntity<Object> commitByReferenceAndProjectId = gitlabDataProxy.getCommit(projectId,commitRef);
-        return null;
+        Commit commitByProjectIdAndRef = commitUtil.parseToCommitObject(commitByReferenceAndProjectId);
+        return commitByProjectIdAndRef;
     }
 }

@@ -62,10 +62,10 @@ public class GitlabController {
 
      //Get commit by id,branch
     @RequestMapping(value="/commits/{projectId}/{commitRef}", method = RequestMethod.GET)
-    public ResponseEntity<?> getCommitByReference(@PathVariable("projectId") String projectId,
+    public Commit getCommitByReference(@PathVariable("projectId") String projectId,
                                                   @PathVariable("commitRef") String commitRef){
-        Object commit = gitlabCommitService.getCommitByReference(projectId, commitRef);
-        return null;
+        Commit commit = gitlabCommitService.getCommitByReference(projectId, commitRef);
+        return commit;
     }
 
 }
