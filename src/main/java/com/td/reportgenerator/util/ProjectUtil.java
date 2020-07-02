@@ -56,7 +56,6 @@ public class ProjectUtil {
             json.put("id", node.get("id"));
             json.put("name", node.get("name").asText());
             json.put("description", verifyDescription(node));
-//            json.put("webUrl", node.get("web_url").asText());
             json.put("webUrl", (node.has("web_url"))? node.get("web_url").asText():
                                 node.has("url")? node.get("url").asText():null);
         }

@@ -61,8 +61,21 @@ public class CommitUtil {
         JsonNode node = new ObjectMapper().readTree(jsonProject);
         JSONObject json = new JSONObject();
 
+        json.put("id", commitId(node));
+
+        if(node.has("commit")){ //github parse
+            JsonNode child = node.get("commit");
+            JsonNode author = child.get("author");
+            json.put("authorName", author.get("name").asText());
+            json.put("authorEmail", author.get("email").asText());
+            json.put("creationDate",convert(author.get("date").asText()));
+            json.put("message", child.get("message").asText());
+            json.put("webUrl", child.get("url").asText());
+
+        }
+
         //parse to gitlab commit
-        json.put("id", node.get("id").asText());
+
         json.put("authorName", node.get("author_name").asText());
         json.put("authorEmail", node.get("author_email").asText());
         json.put("creationDate",convert(node.get("created_at").asText()));
@@ -86,6 +99,12 @@ public class CommitUtil {
         DateTime date;
         date = new DateTime(dateString);
         return date;
+    }
+
+    private String commitId(JsonNode bodyResponse){
+        String commitId = bodyResponse.has("id") ? bodyResponse.get("id").asText() :
+                          bodyResponse.has("sha")? bodyResponse.get("sha").asText(): null;
+        return commitId;
     }
 
 }
