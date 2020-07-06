@@ -83,4 +83,9 @@ public class GitlabDataProxy extends GitlabBaseProxy{
         );
         return commitByRef;
     }
+
+    public ResponseEntity<Object[]> getCommitsSince(String projectId, String dateSince) {
+        //http://localhost:9090/api/commits/18625237/since?since=2019-02-19T00:00:00
+        return null;
+    }
 }

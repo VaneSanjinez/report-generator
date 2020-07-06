@@ -10,4 +10,5 @@ public interface ICommits {
 
     List<Commit> getAllProjectCommits(String projectId);
     Commit getCommitByReference(String projectId, String commitRef);
+    ResponseEntity<Object[]> getCommitsSinceDate(String projectId, String sinceDate);
 }

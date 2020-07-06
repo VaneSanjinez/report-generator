@@ -32,4 +32,9 @@ public class GitlabCommitServiceImpl implements ICommits{
         Commit commitByProjectIdAndRef = commitUtil.parseToCommitObject(commitByReferenceAndProjectId);
         return commitByProjectIdAndRef;
     }
+
+    public ResponseEntity<Object[]> getCommitsSinceDate(String projectId, String dateSince){
+        ResponseEntity<Object[]> commitsSince = gitlabDataProxy.getCommitsSince(projectId, dateSince);
+        return null;
+    }
 }
