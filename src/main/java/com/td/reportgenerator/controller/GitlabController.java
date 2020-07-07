@@ -68,4 +68,12 @@ public class GitlabController {
         return commit;
     }
 
+    //get commits since
+    @RequestMapping(value="/commits/{projectId}/sinceDate", method=RequestMethod.GET)
+    public ResponseEntity<Object[]> getCommitsSinceDate(@PathVariable("projectId") String projectId,
+                                                        @RequestParam String since){
+        ResponseEntity<Object[]> commitsSince = gitlabCommitService.getCommitsSinceDate(projectId,since);
+//        System.out.println(commitsSince.getBody());
+        return null;
+    }
 }

@@ -1,10 +1,12 @@
 package com.td.reportgenerator.proxy;
 
+import com.sun.org.apache.bcel.internal.generic.GETFIELD;
 import com.td.reportgenerator.util.GitlabUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriComponentsBuilder;
 
 @Component
 public class GitlabDataProxy extends GitlabBaseProxy{
@@ -86,6 +88,19 @@ public class GitlabDataProxy extends GitlabBaseProxy{
 
     public ResponseEntity<Object[]> getCommitsSince(String projectId, String dateSince) {
         //http://localhost:9090/api/commits/18625237/since?since=2019-02-19T00:00:00
+        String url = GITLAB_BASE_URL + "commits/" + projectId + "/since";
+        UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(url);
+        builder.queryParam("since", dateSince);
+        String uri= builder.build().encode().toUriString();
+        HttpEntity request = gitlabUtil.declareTemplate(personalToken);
+        ResponseEntity<Object[]> commitsSince = restTemplate.exchange(
+                uri,
+                HttpMethod.GET,
+                request,
+                Object[].class
+
+        );
+        System.out.println(commitsSince.getBody());
         return null;
     }
 }
