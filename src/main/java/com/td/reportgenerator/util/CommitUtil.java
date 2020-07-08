@@ -49,25 +49,48 @@ public class CommitUtil {
         JsonNode node = new ObjectMapper().readTree(jsonProject);
         JSONObject json = new JSONObject();
 
-        json.put("id", getCommitId(node));
+        String service = validateService(node);
 
-        if(node.has("commit")){ //Parse to github
-            JsonNode child = node.get("commit");
-            JsonNode author = child.get("author");
-            json.put("authorName", author.get("name").asText());
-            json.put("authorEmail", author.get("email").asText());
-            json.put("creationDate",convertToDate(author.get("date").asText()));
-            json.put("message", child.get("message").asText());
-            json.put("webUrl", child.get("url").asText());
-
+        JsonNode nodeCommit = node.has("commit")?node.get("commit") : null;
+        JsonNode nodeAuthor = null;
+        if(nodeCommit != null){
+            nodeAuthor = nodeCommit.has("author")? nodeCommit.get("author"):null;
         }
+        json.put("id", getCommitId(node));
+        json.put("authorName", service.equals("github") ? nodeAuthor.get("name").asText():
+                               service.equals("gitlab") ? node.get("author_name").asText() : null);
 
-        //Parse to gitlab commit
-        json.put("authorName", node.get("author_name").asText());
-        json.put("authorEmail", node.get("author_email").asText());
-        json.put("creationDate",convertToDate((node.get("created_at").asText())));
-        json.put("message", node.get("message").asText());
-        json.put("webUrl", node.get("web_url").asText());
+        json.put("authorEmail", service.equals("github") ? nodeAuthor.get("email").asText():
+                                service.equals("gitlab")? node.get("author_email").asText(): null);
+
+        json.put("creationDate", service.equals("github") ? convertToDate(nodeAuthor.get("date").asText()):
+                                 service.equals("gitlab") ? convertToDate(node.get("created_at").asText()):null);
+
+        json.put("message", service.equals("github") ? nodeCommit.get("message").asText():
+                            service.equals("gitlab") ? node.get("message").asText() : null);
+
+        json.put("webUrl", service.equals("github") ? nodeCommit.get("message").asText():
+                           service.equals("gitlab") ? node.get("web_url").asText():null);
+
+//        if(node.has("commit")){ //Parse to github
+//            JsonNode child = node.get("commit");
+//            JsonNode author = child.get("author");
+//            json.put("authorName", author.get("name").asText());
+//            json.put("authorEmail", author.get("email").asText());
+//            json.put("creationDate",convertToDate(author.get("date").asText()));
+//            json.put("message", child.get("message").asText());
+//            json.put("webUrl", child.get("url").asText());
+//
+//        }
+//
+//        //Parse to gitlab commit
+//        json.put("authorName", node.get("author_name").asText());
+//        json.put("authorEmail", node.get("author_email").asText());
+//        json.put("creationDate",convertToDate((node.get("created_at").asText())));
+//        json.put("message", node.get("message").asText());
+//        json.put("webUrl", node.get("web_url").asText());
+
+//        json.put("authorName", node.has("value"));
         return json;
     }
 
@@ -94,4 +117,21 @@ public class CommitUtil {
         return commitId;
     }
 
+    private String validateService(JsonNode jsonNode){
+        String service;
+        if(jsonNode.has("values")){
+            service= "bitBucket";
+        }else if(jsonNode.has("commit")){
+            service= "github";
+        }else{
+            service =  "gitlab";
+        }
+        return service;
+    }
+
+    private String getCommitAuthor(JsonNode bodyResponse){
+        String commitAuthor = bodyResponse.has("author_name") ? bodyResponse.get("author_name").asText():
+                              bodyResponse.has("author") ? bodyResponse.get("author").asText() :null;
+        return null;
+    }
 }
