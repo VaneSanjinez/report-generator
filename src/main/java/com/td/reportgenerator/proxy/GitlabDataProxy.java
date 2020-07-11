@@ -101,6 +101,7 @@ public class GitlabDataProxy extends GitlabBaseProxy{
 
         );
         System.out.println(commitsSince.getBody());
-        return null;
+        return commitsSince;
+//        return null;
     }
 }

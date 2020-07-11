@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 
 @Service
@@ -33,9 +34,27 @@ public class GitlabCommitServiceImpl implements ICommits{
         return commitByProjectIdAndRef;
     }
 
-    public ResponseEntity<Object[]> getCommitsSinceDate(String projectId, String dateSince){
-        ResponseEntity<Object[]> commitsSince = gitlabDataProxy.getCommitsSince(projectId, dateSince);
+//    public ResponseEntity<Object[]> getCommitsByDates(String projectId, Optional<String> dateSince, Optional<String> dateUntil){
+//        ResponseEntity<Object[]> commitsSince = gitlabDataProxy.getCommitsSince(projectId, String.valueOf(dateSince));
+//        System.out.println(commitsSince);
+//        return null;
+//    }
+
+    public ResponseEntity<Object[]> getCommitsSinceDate(String projectId, String sinceDate) {
+        ResponseEntity<Object[]> commitsSince = gitlabDataProxy.getCommitsSince(projectId, String.valueOf(sinceDate));
         System.out.println(commitsSince);
+        return commitsSince;
+    }
+
+    public ResponseEntity<Object[]> getCommitsUntilDate(String projectId, String untilDate) {
         return null;
+    }
+
+    public ResponseEntity<Object[]> getCommitsSinceUntilDates(String projectId, String since, String until) {
+        return null;
+    }
+
+    private void hello(){
+
     }
 }

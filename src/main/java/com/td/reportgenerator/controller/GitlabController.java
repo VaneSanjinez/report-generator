@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 //@Controller("gitlabController")
 @RestController
@@ -69,11 +70,22 @@ public class GitlabController {
     }
 
     //get commits since
-    @RequestMapping(value="/commits/{projectId}/sinceDate", method=RequestMethod.GET)
+    @RequestMapping(value="/commits/{projectId}/dates", method=RequestMethod.GET)
     public ResponseEntity<Object[]> getCommitsSinceDate(@PathVariable("projectId") String projectId,
-                                                        @RequestParam String since){
-        ResponseEntity<Object[]> commitsSince = gitlabCommitService.getCommitsSinceDate(projectId,since);
+                                                        @RequestParam("since") Optional<String> since,
+                                                        @RequestParam("until") Optional<String> until){
+//        ResponseEntity<Object[]> commitsSince = gitlabCommitService.getCommitsByDates(projectId,since,until);
+        ResponseEntity<Object[]> commitsResponse = null;
+        if(since.isPresent() && !until.isPresent()){
+            System.out.println("only since is present");
+            commitsResponse = gitlabCommitService.getCommitsSinceDate(projectId, String.valueOf(since));
+        }else if (until.isPresent() && !since.isPresent()){
+            System.out.println("only until is present");
+        }
+        else if (since.isPresent() && until.isPresent()){
+            System.out.println("since and until are present!");
+        }
 //        System.out.println(commitsSince.getBody());
-        return null;
+        return commitsResponse;
     }
 }

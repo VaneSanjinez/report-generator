@@ -111,7 +111,7 @@ public class CommitUtil {
         return date;
     }
 
-    private String getCommitId(JsonNode bodyResponse){
+    private String getCommitId(JsonNode bodyResponse){ //Id of the commit GITLAB and GITHUB
         String commitId = bodyResponse.has("id") ? bodyResponse.get("id").asText() :
                           bodyResponse.has("sha")? bodyResponse.get("sha").asText(): null;
         return commitId;
