@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -71,11 +72,11 @@ public class GitlabController {
 
     //get commits since
     @RequestMapping(value="/commits/{projectId}/dates", method=RequestMethod.GET)
-    public ResponseEntity<Object[]> getCommitsSinceDate(@PathVariable("projectId") String projectId,
+    public List<Commit> getCommitsSinceDate(@PathVariable("projectId") String projectId,
                                                         @RequestParam("since") Optional<String> since,
                                                         @RequestParam("until") Optional<String> until){
 //        ResponseEntity<Object[]> commitsSince = gitlabCommitService.getCommitsByDates(projectId,since,until);
-        ResponseEntity<Object[]> commitsResponse = null;
+        List<Commit> commitsResponse = new ArrayList<>();
         if(since.isPresent() && !until.isPresent()){
             System.out.println("only since is present");
             commitsResponse = gitlabCommitService.getCommitsSinceDate(projectId, String.valueOf(since));
