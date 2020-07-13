@@ -11,6 +11,6 @@ public interface ICommits {
     List<Commit> getAllProjectCommits(String projectId);
     Commit getCommitByReference(String projectId, String commitRef);
     List<Commit> getCommitsSinceDate(String projectId, String sinceDate);
-    ResponseEntity<Object[]> getCommitsUntilDate(String projectId, String untilDate);
+    List<Commit> getCommitsUntilDate(String projectId, String untilDate);
     ResponseEntity<Object[]> getCommitsSinceUntilDates(String projectId, String since, String until);
 }

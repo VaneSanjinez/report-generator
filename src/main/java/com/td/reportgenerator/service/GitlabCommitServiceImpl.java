@@ -46,15 +46,15 @@ public class GitlabCommitServiceImpl implements ICommits{
         return commitsSinceDate;
     }
 
-    public ResponseEntity<Object[]> getCommitsUntilDate(String projectId, String untilDate) {
-        return null;
+    public List<Commit> getCommitsUntilDate(String projectId, String untilDate) {
+        ResponseEntity<Object[]> commitsUntil = gitlabDataProxy.getCommitsUntil(projectId,String.valueOf(untilDate));
+        List<Commit> commitsUntilDate = commitUtil.parseResponseBodyToCommitList(commitsUntil);
+        return commitsUntilDate;
+//        return null;
     }
 
     public ResponseEntity<Object[]> getCommitsSinceUntilDates(String projectId, String since, String until) {
         return null;
     }
 
-    private void hello(){
-
-    }
 }

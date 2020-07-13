@@ -104,4 +104,20 @@ public class GitlabDataProxy extends GitlabBaseProxy{
         return commitsSince;
 //        return null;
     }
+
+    public ResponseEntity<Object[]> getCommitsUntil(String projectId, String dateUntil) {
+        String url = GITLAB_BASE_URL + "commits/" +projectId + "/until";
+        UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(url);
+        builder.queryParam("until", dateUntil);
+        String uri = builder.build().encode().toUriString();
+        HttpEntity request = gitlabUtil.declareTemplate(personalToken);
+        ResponseEntity<Object[]> commitsUntil = restTemplate.exchange(
+                uri,
+                HttpMethod.GET,
+                request,
+                Object[].class
+        );
+        return commitsUntil;
+//        return null;
+    }
 }

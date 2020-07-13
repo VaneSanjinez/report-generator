@@ -128,10 +128,4 @@ public class CommitUtil {
         }
         return service;
     }
-
-    private String getCommitAuthor(JsonNode bodyResponse){
-        String commitAuthor = bodyResponse.has("author_name") ? bodyResponse.get("author_name").asText():
-                              bodyResponse.has("author") ? bodyResponse.get("author").asText() :null;
-        return null;
-    }
 }

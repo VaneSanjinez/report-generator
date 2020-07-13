@@ -81,6 +81,8 @@ public class GitlabController {
             System.out.println("only since is present");
             commitsResponse = gitlabCommitService.getCommitsSinceDate(projectId, String.valueOf(since));
         }else if (until.isPresent() && !since.isPresent()){
+            commitsResponse = gitlabCommitService.getCommitsUntilDate(projectId, String.valueOf(until));
+
             System.out.println("only until is present");
         }
         else if (since.isPresent() && until.isPresent()){
