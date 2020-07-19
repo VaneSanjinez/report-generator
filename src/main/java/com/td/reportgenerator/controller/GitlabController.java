@@ -88,7 +88,6 @@ public class GitlabController {
             commitsResponse = gitlabCommitService.getCommitsSinceUntilDates(projectId, String.valueOf(since), String.valueOf(until));
             System.out.println("since and until are present!");
         }
-//        System.out.println(commitsSince.getBody());
         return commitsResponse;
     }
 }
