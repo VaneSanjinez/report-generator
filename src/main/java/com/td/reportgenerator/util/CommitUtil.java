@@ -19,10 +19,8 @@ public class CommitUtil {
         List<Commit> commitList = new ArrayList<>();
         for (Object commit: commitsByProjectBody) {
             Commit commmitObject = new Commit();
-            System.out.println(commit);
             try {
                 commmitObject = this.jsonObjectToCommit(this.objectToJSONObject(commit));
-                System.out.println(commmitObject);
             } catch (JsonProcessingException e) {
                 e.printStackTrace();
             }
@@ -53,9 +51,11 @@ public class CommitUtil {
 
         JsonNode nodeCommit = node.has("commit")?node.get("commit") : null;
         JsonNode nodeAuthor = null;
+
         if(nodeCommit != null){
             nodeAuthor = nodeCommit.has("author")? nodeCommit.get("author"):null;
         }
+        //Parse to Commit object according to the service
         json.put("id", getCommitId(node));
         json.put("authorName", service.equals("github") ? nodeAuthor.get("name").asText():
                                service.equals("gitlab") ? node.get("author_name").asText() : null);

@@ -34,12 +34,6 @@ public class GitlabCommitServiceImpl implements ICommits{
         return commitByProjectIdAndRef;
     }
 
-//    public ResponseEntity<Object[]> getCommitsByDates(String projectId, Optional<String> dateSince, Optional<String> dateUntil){
-//        ResponseEntity<Object[]> commitsSince = gitlabDataProxy.getCommitsSince(projectId, String.valueOf(dateSince));
-//        System.out.println(commitsSince);
-//        return null;
-//    }
-
     public List<Commit> getCommitsSinceDate(String projectId, String sinceDate) {
         ResponseEntity<Object[]> commitsSince = gitlabDataProxy.getCommitsSince(projectId, String.valueOf(sinceDate));
         List<Commit> commitsSinceDate = commitUtil.parseResponseBodyToCommitList(commitsSince);
@@ -50,7 +44,6 @@ public class GitlabCommitServiceImpl implements ICommits{
         ResponseEntity<Object[]> commitsUntil = gitlabDataProxy.getCommitsUntil(projectId,String.valueOf(untilDate));
         List<Commit> commitsUntilDate = commitUtil.parseResponseBodyToCommitList(commitsUntil);
         return commitsUntilDate;
-//        return null;
     }
 
     public List<Commit> getCommitsSinceUntilDates(String projectId, String since, String until) {

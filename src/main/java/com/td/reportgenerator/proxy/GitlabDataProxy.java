@@ -102,7 +102,6 @@ public class GitlabDataProxy extends GitlabBaseProxy{
         );
         System.out.println(commitsSince.getBody());
         return commitsSince;
-//        return null;
     }
 
     public ResponseEntity<Object[]> getCommitsUntil(String projectId, String dateUntil) {
@@ -118,7 +117,6 @@ public class GitlabDataProxy extends GitlabBaseProxy{
                 Object[].class
         );
         return commitsUntil;
-//        return null;
     }
 
     public ResponseEntity<Object[]> getCommitsSinceUntil(String projectId, String since, String until) {
@@ -136,6 +134,5 @@ public class GitlabDataProxy extends GitlabBaseProxy{
                 Object[].class
         );
         return commitsSinceUntil;
-        
     }
 }

@@ -5,22 +5,21 @@ import com.td.reportgenerator.model.Project;
 import com.td.reportgenerator.service.GitlabCommitServiceImpl;
 import com.td.reportgenerator.service.GitlabProjectServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-//@Controller("gitlabController")
 @RestController
 @RequestMapping(value="/gitlab")
 public class GitlabController {
-    //Projects
+
+    //Projects Service Implementation
     @Autowired
     GitlabProjectServiceImpl gitlabProjectService;
 
-    //Commits
+    //Commits Service Implementation
     @Autowired
     GitlabCommitServiceImpl gitlabCommitService;
 
@@ -31,7 +30,8 @@ public class GitlabController {
     }
 
 //    Projects controller
-    //get all projects
+
+    //Get all projects
     @RequestMapping(value="/projects", method = RequestMethod.GET)
     public List<Project> getAllProjects (){
         List<Project> projects = gitlabProjectService.getAllProjects();
@@ -39,7 +39,7 @@ public class GitlabController {
 
     }
 
-    //get by project id
+    //Get by project id
     @RequestMapping(value = "/projects/{projectId}", method = RequestMethod.GET)
     public Project getProjectById(@PathVariable("projectId") String projectId){
         Project project = gitlabProjectService.getProjectById(projectId);
@@ -70,23 +70,19 @@ public class GitlabController {
         return commit;
     }
 
-    //get commits since
+    //Get commits by dates with params for since, until & since until
     @RequestMapping(value="/commits/{projectId}/dates", method=RequestMethod.GET)
     public List<Commit> getCommitsSinceDate(@PathVariable("projectId") String projectId,
                                                         @RequestParam("since") Optional<String> since,
                                                         @RequestParam("until") Optional<String> until){
-//        ResponseEntity<Object[]> commitsSince = gitlabCommitService.getCommitsByDates(projectId,since,until);
         List<Commit> commitsResponse = new ArrayList<>();
         if(since.isPresent() && !until.isPresent()){
-            System.out.println("only since is present");
             commitsResponse = gitlabCommitService.getCommitsSinceDate(projectId, String.valueOf(since));
         }else if (until.isPresent() && !since.isPresent()){
             commitsResponse = gitlabCommitService.getCommitsUntilDate(projectId, String.valueOf(until));
-            System.out.println("only until is present");
         }
         else if (since.isPresent() && until.isPresent()){
             commitsResponse = gitlabCommitService.getCommitsSinceUntilDates(projectId, String.valueOf(since), String.valueOf(until));
-            System.out.println("since and until are present!");
         }
         return commitsResponse;
     }
