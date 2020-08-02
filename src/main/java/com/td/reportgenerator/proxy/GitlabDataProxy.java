@@ -135,4 +135,10 @@ public class GitlabDataProxy extends GitlabBaseProxy{
         );
         return commitsSinceUntil;
     }
+
+    //Branches controller
+    public ResponseEntity<Object[]> getAllBranchesByProjectId(String projectId) {
+        //http://localhost:9090/api/branches/project/18625237/branches?privateToken=cxXdxSAm8KmZZe7RZ7i6
+        return null;
+    }
 }
