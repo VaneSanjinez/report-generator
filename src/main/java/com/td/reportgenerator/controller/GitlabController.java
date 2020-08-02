@@ -71,6 +71,7 @@ public class GitlabController {
     }
 
     //Get commits by dates with params for since, until & since until
+    //Validation to build the request according of what is present on call
     @RequestMapping(value="/commits/{projectId}/dates", method=RequestMethod.GET)
     public List<Commit> getCommitsSinceDate(@PathVariable("projectId") String projectId,
                                                         @RequestParam("since") Optional<String> since,
