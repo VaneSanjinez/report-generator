@@ -1,12 +1,15 @@
 package com.td.reportgenerator.controller;
 
+import com.td.reportgenerator.model.Branch;
 import com.td.reportgenerator.model.Commit;
 import com.td.reportgenerator.model.Project;
+import com.td.reportgenerator.service.GitlabBranchServiceImpl;
 import com.td.reportgenerator.service.GitlabCommitServiceImpl;
 import com.td.reportgenerator.service.GitlabProjectServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.swing.text.AbstractDocument;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -22,6 +25,10 @@ public class GitlabController {
     //Commits Service Implementation
     @Autowired
     GitlabCommitServiceImpl gitlabCommitService;
+
+    //Branches Service Implementation
+    @Autowired
+    GitlabBranchServiceImpl gitlabBranchService;
 
 //    hello controller
     @RequestMapping(value="/hello", method = RequestMethod.GET)
@@ -86,5 +93,11 @@ public class GitlabController {
             commitsResponse = gitlabCommitService.getCommitsSinceUntilDates(projectId, String.valueOf(since), String.valueOf(until));
         }
         return commitsResponse;
+    }
+
+    @RequestMapping(value = "/branches/{projectId}", method = RequestMethod.GET)
+    public List<Branch> getAllProjectBranches (@PathVariable("projectId") String projectId){
+        List<Branch> projectBranches = gitlabBranchService.getAllBranchesFromProject(projectId);
+        return null;
     }
 }
