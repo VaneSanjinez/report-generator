@@ -43,8 +43,8 @@ public class CommitUtil {
 
     private JSONObject objectToJSONObject(Object commitObject) throws JsonProcessingException { //Parse from object to JSON Object
         ObjectMapper mapper = new ObjectMapper();
-        String jsonProject = mapper.writeValueAsString(commitObject);
-        JsonNode node = new ObjectMapper().readTree(jsonProject);
+        String jsonCommit = mapper.writeValueAsString(commitObject);
+        JsonNode node = new ObjectMapper().readTree(jsonCommit);
         JSONObject json = new JSONObject();
 
         String service = validateService(node);
