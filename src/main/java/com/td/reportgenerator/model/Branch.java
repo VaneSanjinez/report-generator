@@ -5,6 +5,9 @@ public class Branch {
     public boolean merged;
     public String webUrl;
 
+    public Branch() {
+    }
+
     public Branch(String name, boolean merged, String webUrl) {
         this.name = name;
         this.merged = merged;
