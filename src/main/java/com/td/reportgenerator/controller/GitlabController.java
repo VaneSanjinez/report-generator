@@ -100,4 +100,12 @@ public class GitlabController {
         List<Branch> projectBranches = gitlabBranchService.getAllBranchesFromProject(projectId);
         return projectBranches;
     }
+
+    @RequestMapping(value="{projectId}/branches/{branchName}", method = RequestMethod.GET)
+    public Branch getBranchDetatils(@PathVariable("projectId") String projectId,
+                                    @PathVariable("branchName") String branchName){
+        Branch branch = gitlabBranchService.getBranchById(projectId,branchName);
+        return branch;
+    }
+
 }

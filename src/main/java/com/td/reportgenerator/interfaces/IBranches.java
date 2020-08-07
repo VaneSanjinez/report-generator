@@ -7,5 +7,5 @@ import java.util.List;
 public interface IBranches {
     List<Branch> getAllBranchesFromProject(String projectId);
     
-    Branch getBranchById();
+    Branch getBranchById(String projectId, String branchName);
 }

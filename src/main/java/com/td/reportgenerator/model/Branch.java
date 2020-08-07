@@ -1,7 +1,12 @@
 package com.td.reportgenerator.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
+@JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
 public class Branch {
     public String name;
+//    @JsonIgnore
     public boolean merged;
     public String webUrl;
 

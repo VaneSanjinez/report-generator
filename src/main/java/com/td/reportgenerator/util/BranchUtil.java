@@ -53,4 +53,30 @@ public class BranchUtil {
         }
         return branch;
     }
+
+    public Branch parseResponseBodyToBranch(ResponseEntity<Object> branchResponse) {
+        Object branch = branchResponse.getBody();
+        Branch branchObject = new Branch();
+        try {
+            branchObject = this.jsonObjectToBranch(this.objectToJSON(branch));
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        return branchObject;
+
+
+//        Object commit = commitByReferenceAndProjectId.getBody();
+//        JSONObject commitAsJSONObject = null;
+//        try {
+//            commitAsJSONObject = objectToJSONObject(commit);
+//        } catch (JsonProcessingException e) {
+//            e.printStackTrace();
+//        }
+//        Commit commitObject = jsonObjectToCommit(commitAsJSONObject);
+//        return commitObject;
+//        Object branch = branchResponse.getBody();
+//        JSONObject commitAsJson = null;
+//        try{}
+
+    }
 }

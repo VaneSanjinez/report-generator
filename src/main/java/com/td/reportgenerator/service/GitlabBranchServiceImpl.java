@@ -28,7 +28,9 @@ public class GitlabBranchServiceImpl implements IBranches {
         return branches;
     }
 
-    public Branch getBranchById() {
-        return null;
+    public Branch getBranchById(String projectId, String branchName) {
+        ResponseEntity<Object> branchResponse = gitlabDataProxy.getBranchDetails(projectId,branchName);
+        Branch branchDetails = branchUtil.parseResponseBodyToBranch(branchResponse);
+        return branchDetails;
     }
 }
