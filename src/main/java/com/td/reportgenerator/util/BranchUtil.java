@@ -29,7 +29,6 @@ public class BranchUtil {
             branchList.add(branchObject);
         }
         return branchList;
-//        return null;
     }
     private JSONObject objectToJSON(Object branchObject) throws JsonProcessingException { //Parse from object to JSON Object
         ObjectMapper mapper = new ObjectMapper();
@@ -63,20 +62,5 @@ public class BranchUtil {
             e.printStackTrace();
         }
         return branchObject;
-
-
-//        Object commit = commitByReferenceAndProjectId.getBody();
-//        JSONObject commitAsJSONObject = null;
-//        try {
-//            commitAsJSONObject = objectToJSONObject(commit);
-//        } catch (JsonProcessingException e) {
-//            e.printStackTrace();
-//        }
-//        Commit commitObject = jsonObjectToCommit(commitAsJSONObject);
-//        return commitObject;
-//        Object branch = branchResponse.getBody();
-//        JSONObject commitAsJson = null;
-//        try{}
-
     }
 }
