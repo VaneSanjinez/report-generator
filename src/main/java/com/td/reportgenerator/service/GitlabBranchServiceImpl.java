@@ -23,8 +23,9 @@ public class GitlabBranchServiceImpl implements IBranches {
 //        ResponseEntity<Object[]> allCommitsByProjectId = gitlabDataProxy.getAllCommitsByProjectId(projectId);
 //        List<Commit> commits = commitUtil.parseResponseBodyToCommitList(allCommitsByProjectId);
         ResponseEntity<Object[]> allBranchesByProjectId = gitlabDataProxy.getAllBranchesByProjectId(projectId);
-
-        return null;
+        List<Branch> branches = branchUtil.parseResponseBodyToCommitList(allBranchesByProjectId);
+        System.out.println(branches);
+        return branches;
     }
 
     public Branch getBranchById() {

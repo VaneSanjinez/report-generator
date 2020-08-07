@@ -28,8 +28,8 @@ public class BranchUtil {
             }
             branchList.add(branchObject);
         }
-//        return branchList;
-        return null;
+        return branchList;
+//        return null;
     }
     private JSONObject objectToJSON(Object branchObject) throws JsonProcessingException { //Parse from object to JSON Object
         ObjectMapper mapper = new ObjectMapper();

@@ -98,6 +98,6 @@ public class GitlabController {
     @RequestMapping(value = "/branches/{projectId}", method = RequestMethod.GET)
     public List<Branch> getAllProjectBranches (@PathVariable("projectId") String projectId){
         List<Branch> projectBranches = gitlabBranchService.getAllBranchesFromProject(projectId);
-        return null;
+        return projectBranches;
     }
 }

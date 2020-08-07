@@ -148,6 +148,6 @@ public class GitlabDataProxy extends GitlabBaseProxy{
                 Object[].class
         );
         System.out.println(projectBranches);
-        return null;
+        return projectBranches;
     }
 }
