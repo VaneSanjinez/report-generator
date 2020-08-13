@@ -63,14 +63,14 @@ public class GitlabController {
 //    Commits controller
 
     //Get all commits from a project (by project id)
-    @RequestMapping(value="/commits/{projectId}", method = RequestMethod.GET)
+    @RequestMapping(value="/projects/{projectId}/commits", method = RequestMethod.GET)
     public List<Commit> getCommitsByProjectId(@PathVariable("projectId") String projectId){
         List<Commit> commitsByProjectId = gitlabCommitService.getAllProjectCommits(projectId);
         return commitsByProjectId;
      }
 
      //Get commit by id,branch
-    @RequestMapping(value="/commits/{projectId}/{commitRef}", method = RequestMethod.GET)
+    @RequestMapping(value="/projects/{projectId}/commits/{commitRef}", method = RequestMethod.GET)
     public Commit getCommitByReference(@PathVariable("projectId") String projectId,
                                                   @PathVariable("commitRef") String commitRef){
         Commit commit = gitlabCommitService.getCommitByReference(projectId, commitRef);
@@ -79,7 +79,7 @@ public class GitlabController {
 
     //Get commits by dates with params for since, until & since until
     //Validation to build the request according of what is present on call
-    @RequestMapping(value="/commits/{projectId}/dates", method=RequestMethod.GET)
+    @RequestMapping(value="/projects/{projectId}/commits/dates", method=RequestMethod.GET)
     public List<Commit> getCommitsSinceDate(@PathVariable("projectId") String projectId,
                                                         @RequestParam("since") Optional<String> since,
                                                         @RequestParam("until") Optional<String> until){
@@ -94,14 +94,16 @@ public class GitlabController {
         }
         return commitsResponse;
     }
-
-    @RequestMapping(value = "/branches/{projectId}", method = RequestMethod.GET)
+    //branch controller
+    //Get all branches from project
+    @RequestMapping(value = "/projects/{projectId}/branches", method = RequestMethod.GET)
     public List<Branch> getAllProjectBranches (@PathVariable("projectId") String projectId){
         List<Branch> projectBranches = gitlabBranchService.getAllBranchesFromProject(projectId);
         return projectBranches;
     }
 
-    @RequestMapping(value="{projectId}/branches/{branchName}", method = RequestMethod.GET)
+    //get single branch of project
+    @RequestMapping(value="/projects/{projectId}/branches/{branchName}", method = RequestMethod.GET)
     public Branch getBranchDetatils(@PathVariable("projectId") String projectId,
                                     @PathVariable("branchName") String branchName){
         Branch branch = gitlabBranchService.getBranchById(projectId,branchName);
