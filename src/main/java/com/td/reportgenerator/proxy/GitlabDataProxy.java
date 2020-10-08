@@ -139,7 +139,7 @@ public class GitlabDataProxy extends GitlabBaseProxy{
     //Branches
     public ResponseEntity<Object[]> getAllBranchesByProjectId(String projectId) {
         //http://localhost:9090/api/branches/project/18625237/branches
-        String url = GITLAB_BASE_URL + "branches/project/" +projectId+ "/branches";
+        String url = GITLAB_BASE_URL + "project/" +projectId+ "/branches";
         HttpEntity request = gitlabUtil.declareTemplate(personalToken);
         ResponseEntity<Object[]> projectBranches = restTemplate.exchange(
                 url,
@@ -152,7 +152,7 @@ public class GitlabDataProxy extends GitlabBaseProxy{
 
     public ResponseEntity<Object> getBranchDetails(String projectId, String branchName) {
         //http://localhost:9090/api/branches/project/18625237/branches/master
-        String url = GITLAB_BASE_URL + "branches/project/" + projectId + "/branches/" + branchName;
+        String url = GITLAB_BASE_URL + "/project/" + projectId + "/branches/" + branchName;
         HttpEntity request = gitlabUtil.declareTemplate(personalToken);
 
         ResponseEntity<Object> branchDetails = restTemplate.exchange(
