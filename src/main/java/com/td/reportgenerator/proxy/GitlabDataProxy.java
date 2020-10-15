@@ -1,6 +1,5 @@
 package com.td.reportgenerator.proxy;
 
-import com.sun.org.apache.bcel.internal.generic.GETFIELD;
 import com.td.reportgenerator.util.GitlabUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
@@ -19,21 +18,20 @@ public class GitlabDataProxy extends GitlabBaseProxy{
     //Projects
     public ResponseEntity<Object []> getAllProjects(){
         //http://localhost:9090/api/projects
-        String url = GITLAB_BASE_URL + "projects";
+        String url = GITLAB_POC_BASE_URL + "projects";
         HttpEntity request = gitlabUtil.declareTemplate(this.personalToken);
         ResponseEntity<Object[]> allProjects = restTemplate.exchange(
                 url,
                 HttpMethod.GET,
-                null,
+                request,
                 Object[].class
         );
-        System.out.println(allProjects);
         return allProjects;
     }
 
     public ResponseEntity<Object> getProjectById(String projectID) {
 //        http://localhost:9090/api/projects/18625237
-        String url = GITLAB_BASE_URL + "projects/" + projectID;
+        String url = GITLAB_POC_BASE_URL + "projects/" + projectID;
         HttpEntity request = gitlabUtil.declareTemplate(this.personalToken);
         ResponseEntity<Object> project = restTemplate.exchange(
                 url,
@@ -46,7 +44,7 @@ public class GitlabDataProxy extends GitlabBaseProxy{
 
     public ResponseEntity<Object[]> getProjectsByUserId(String userId) {
 //        http://localhost:9090/api/projects/users/vane-sanjinez?private_token=cxXdxSAm8KmZZe7RZ7i6
-        String url = GITLAB_BASE_URL + "projects/users/" + userId;
+        String url = GITLAB_POC_BASE_URL + "projects/users/" + userId;
         HttpEntity request = gitlabUtil.declareTemplate(this.personalToken);
         ResponseEntity<Object[]> projectsByUserId = restTemplate.exchange(
                 url,
@@ -60,7 +58,7 @@ public class GitlabDataProxy extends GitlabBaseProxy{
     //Commits
     public ResponseEntity<Object[]> getAllCommitsByProjectId(String projectId){
 //        http://localhost:9090/api/commits/{projectId}
-        String url = GITLAB_BASE_URL + "commits/" + projectId;
+        String url = GITLAB_POC_BASE_URL + "commits/" + projectId;
         HttpEntity request = gitlabUtil.declareTemplate(this.personalToken);
         ResponseEntity<Object[]> commitsByProjectId = restTemplate.exchange(
                 url,
@@ -75,7 +73,7 @@ public class GitlabDataProxy extends GitlabBaseProxy{
 
     public ResponseEntity<Object> getCommit(String projectId, String commitRef) {
 //        http://localhost:9090/api/commits/18625237/master
-        String url = GITLAB_BASE_URL + "commits/" + projectId + "/" + commitRef;
+        String url = GITLAB_POC_BASE_URL + "commits/" + projectId + "/" + commitRef;
         HttpEntity request = gitlabUtil.declareTemplate(personalToken);
         ResponseEntity<Object> commitByRef = restTemplate.exchange(
                 url,
@@ -88,7 +86,7 @@ public class GitlabDataProxy extends GitlabBaseProxy{
 
     public ResponseEntity<Object[]> getCommitsSince(String projectId, String dateSince) {
         //http://localhost:9090/api/commits/18625237/since?since=2019-02-19T00:00:00
-        String url = GITLAB_BASE_URL + "commits/" + projectId + "/since";
+        String url = GITLAB_POC_BASE_URL + "commits/" + projectId + "/since";
         UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(url);
         builder.queryParam("since", dateSince);
         String uri= builder.build().encode().toUriString();
@@ -105,7 +103,7 @@ public class GitlabDataProxy extends GitlabBaseProxy{
     }
 
     public ResponseEntity<Object[]> getCommitsUntil(String projectId, String dateUntil) {
-        String url = GITLAB_BASE_URL + "commits/" +projectId + "/until";
+        String url = GITLAB_POC_BASE_URL + "commits/" +projectId + "/until";
         UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(url);
         builder.queryParam("until", dateUntil);
         String uri = builder.build().encode().toUriString();
@@ -120,7 +118,7 @@ public class GitlabDataProxy extends GitlabBaseProxy{
     }
 
     public ResponseEntity<Object[]> getCommitsSinceUntil(String projectId, String since, String until) {
-        String url = GITLAB_BASE_URL + "commits/" +projectId+"/dates";
+        String url = GITLAB_POC_BASE_URL + "commits/" +projectId+"/dates";
         UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(url);
         builder.queryParam("until", until);
         builder.queryParam("since", since);
@@ -139,7 +137,7 @@ public class GitlabDataProxy extends GitlabBaseProxy{
     //Branches
     public ResponseEntity<Object[]> getAllBranchesByProjectId(String projectId) {
         //http://localhost:9090/api/branches/project/18625237/branches
-        String url = GITLAB_BASE_URL + "project/" +projectId+ "/branches";
+        String url = GITLAB_POC_BASE_URL + "project/" +projectId+ "/branches";
         HttpEntity request = gitlabUtil.declareTemplate(personalToken);
         ResponseEntity<Object[]> projectBranches = restTemplate.exchange(
                 url,
@@ -152,7 +150,7 @@ public class GitlabDataProxy extends GitlabBaseProxy{
 
     public ResponseEntity<Object> getBranchDetails(String projectId, String branchName) {
         //http://localhost:9090/api/branches/project/18625237/branches/master
-        String url = GITLAB_BASE_URL + "/project/" + projectId + "/branches/" + branchName;
+        String url = GITLAB_POC_BASE_URL + "/project/" + projectId + "/branches/" + branchName;
         HttpEntity request = gitlabUtil.declareTemplate(personalToken);
 
         ResponseEntity<Object> branchDetails = restTemplate.exchange(
@@ -162,5 +160,19 @@ public class GitlabDataProxy extends GitlabBaseProxy{
                 Object.class
         );
         return branchDetails;
+    }
+
+    public ResponseEntity<Object[]> getProjectMembers(String projectId) {
+        String url = GITLAB_BASE_URL +"/projects/" + projectId + "/members";
+        HttpEntity request = gitlabUtil.declareTemplate(personalToken);
+
+        ResponseEntity<Object []> projectMembers = restTemplate.exchange(
+                url,
+                HttpMethod.GET,
+                request,
+                Object[].class
+        );
+        System.out.println(projectMembers);
+        return projectMembers;
     }
 }

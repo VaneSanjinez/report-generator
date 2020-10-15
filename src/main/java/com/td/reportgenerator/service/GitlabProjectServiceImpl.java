@@ -22,7 +22,6 @@ public class GitlabProjectServiceImpl implements IProjects {
 
     public List<Project> getAllProjects() {
         ResponseEntity<Object[]> allProjects = gitlabDataProxy.getAllProjects();
-        System.out.println(allProjects.getBody());
         List<Project> projectResponse = projectUtil.parseToProjectArray(allProjects);
         return projectResponse;
     }
@@ -42,5 +41,10 @@ public class GitlabProjectServiceImpl implements IProjects {
         ResponseEntity<Object[]> projectsByUserId = gitlabDataProxy.getProjectsByUserId(username);
         List<Project> projects = projectUtil.parseToProjectArray(projectsByUserId);
         return projects;
+    }
+
+    public ResponseEntity<Object[]> getProjectMembers(String projectId) {
+        ResponseEntity<Object []> projectMembers = gitlabDataProxy.getProjectMembers(projectId);
+        return projectMembers;
     }
 }

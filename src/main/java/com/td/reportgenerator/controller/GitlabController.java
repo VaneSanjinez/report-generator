@@ -7,7 +7,14 @@ import com.td.reportgenerator.service.GitlabBranchServiceImpl;
 import com.td.reportgenerator.service.GitlabCommitServiceImpl;
 import com.td.reportgenerator.service.GitlabProjectServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
+import org.springframework.lang.Nullable;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RequestCallback;
+import org.springframework.web.client.ResponseExtractor;
+import org.springframework.web.client.RestClientException;
 
 import javax.swing.text.AbstractDocument;
 import java.util.ArrayList;
@@ -58,6 +65,12 @@ public class GitlabController {
     public List<Project> getProjectByUserID(@PathVariable("userId") String userId){
         List<Project> projects = gitlabProjectService.getProjectsByUsername(userId);
         return projects;
+    }
+//    get project members
+    @RequestMapping(value="/projects/{projectId}/members", method = RequestMethod.GET)
+    ResponseEntity<Object []> getProjectMembers(@PathVariable("projectId") String projectId){
+        ResponseEntity<Object[]> projectMembers= gitlabProjectService.getProjectMembers(projectId);
+        return projectMembers;
     }
 
 //    Commits controller
