@@ -68,7 +68,7 @@ public class GitlabController {
     }
 //    get project members
     @RequestMapping(value="/projects/{projectId}/members", method = RequestMethod.GET)
-    ResponseEntity<Object []> getProjectMembers(@PathVariable("projectId") String projectId){
+    public ResponseEntity<Object []> getProjectMembers(@PathVariable("projectId") String projectId){
         ResponseEntity<Object[]> projectMembers= gitlabProjectService.getProjectMembers(projectId);
         return projectMembers;
     }
