@@ -2,7 +2,6 @@ package com.td.reportgenerator.service;
 
 import com.td.reportgenerator.interfaces.ICommits;
 import com.td.reportgenerator.model.Commit;
-import com.td.reportgenerator.model.Project;
 import com.td.reportgenerator.proxy.GitlabDataProxy;
 import com.td.reportgenerator.util.CommitUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 
 @Service

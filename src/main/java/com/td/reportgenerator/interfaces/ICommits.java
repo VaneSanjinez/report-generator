@@ -1,7 +1,6 @@
 package com.td.reportgenerator.interfaces;
 
 import com.td.reportgenerator.model.Commit;
-import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 

@@ -1,6 +1,5 @@
 package com.td.reportgenerator.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 import java.util.Date;
@@ -13,7 +12,6 @@ public class Commit {
     public String authorEmail;
     public Date creationDate;
     public String message;
-//    @JsonIgnore
     public String webUrl;
 
     public String getId() {
