@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -50,4 +51,14 @@ public class GitlabCommitServiceImpl implements ICommits{
         return commitsSinceUntilDates;
     }
 
+    public List<Commit> getCommitsByProjectIdAndAuthor(String projectId, String author){
+        List<Commit> commitListByAuthor = new ArrayList<>();
+        List<Commit> projectCommits = this.getAllProjectCommits(projectId);
+        for(int i = 0; i< projectCommits.size(); i++){
+            if(projectCommits.get(i).authorEmail.equals(author)){
+                commitListByAuthor.add(projectCommits.get(i));
+            }
+        }
+        return commitListByAuthor;
+    }
 }

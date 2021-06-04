@@ -3,33 +3,39 @@ package com.td.reportgenerator.model;
 import java.util.Date;
 
 public class Report {
-    public Date date;
+    public Date commitDate;
+    public Date reportDate;
     public long hours;
     public String name;
     public String details;
     public int percentage;
 
-    public Report(Date date, long hours, String name, String details, int percentage) {
-        this.date = date;
+    public Report(Date commitDate, Date reportDate, long hours, String name, String details, int percentage) {
+        this.commitDate = commitDate;
+        this.reportDate = reportDate;
         this.hours = hours;
         this.name = name;
         this.details = details;
         this.percentage = percentage;
     }
 
-    public Report(Date date){
-        this.date = date;
-    }
-
     public Report() {
     }
 
-    public Date getDate() {
-        return date;
+    public Date getCommitDate() {
+        return commitDate;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setCommitDate(Date commitDate) {
+        this.commitDate = commitDate;
+    }
+
+    public Date getReportDate() {
+        return reportDate;
+    }
+
+    public void setReportDate(Date reportDate) {
+        this.reportDate = reportDate;
     }
 
     public long getHours() {
