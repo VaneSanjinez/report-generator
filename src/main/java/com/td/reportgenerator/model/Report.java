@@ -1,72 +1,63 @@
 package com.td.reportgenerator.model;
 
 import java.util.Date;
+import java.util.List;
 
 public class Report {
-    public Date commitDate;
-    public Date reportDate;
-    public long hours;
-    public String name;
-    public String details;
-    public int percentage;
+    public String projectName;
+    public String projectUrl;
+    public Date currentDate;
+    public String projectMember;
+    List<ReportInfo> reportDetails;
 
-    public Report(Date commitDate, Date reportDate, long hours, String name, String details, int percentage) {
-        this.commitDate = commitDate;
-        this.reportDate = reportDate;
-        this.hours = hours;
-        this.name = name;
-        this.details = details;
-        this.percentage = percentage;
+    public Report(String projectName, String projectUrl, Date currentDate, String projectMember, List<ReportInfo> reportDetails) {
+        this.projectName = projectName;
+        this.projectUrl = projectUrl;
+        this.currentDate = currentDate;
+        this.projectMember = projectMember;
+        this.reportDetails = reportDetails;
     }
 
     public Report() {
     }
 
-    public Date getCommitDate() {
-        return commitDate;
+    public String getProjectName() {
+        return projectName;
     }
 
-    public void setCommitDate(Date commitDate) {
-        this.commitDate = commitDate;
+    public void setProjectName(String projectName) {
+        this.projectName = projectName;
     }
 
-    public Date getReportDate() {
-        return reportDate;
+    public String getProjectUrl() {
+        return projectUrl;
     }
 
-    public void setReportDate(Date reportDate) {
-        this.reportDate = reportDate;
+    public void setProjectUrl(String projectUrl) {
+        this.projectUrl = projectUrl;
     }
 
-    public long getHours() {
-        return hours;
+    public Date getCurrentDate() {
+        return currentDate;
     }
 
-    public void setHours(long hours) {
-        this.hours = hours;
+    public void setCurrentDate(Date currentDate) {
+        this.currentDate = currentDate;
     }
 
-    public String getName() {
-        return name;
+    public String getProjectMember() {
+        return projectMember;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setProjectMember(String projectMember) {
+        this.projectMember = projectMember;
     }
 
-    public String getDetails() {
-        return details;
+    public List<ReportInfo> getReportDetails() {
+        return reportDetails;
     }
 
-    public void setDetails(String details) {
-        this.details = details;
-    }
-
-    public int getPercentage() {
-        return percentage;
-    }
-
-    public void setPercentage(int percentage) {
-        this.percentage = percentage;
+    public void setReportDetails(List<ReportInfo> reportDetails) {
+        this.reportDetails = reportDetails;
     }
 }
