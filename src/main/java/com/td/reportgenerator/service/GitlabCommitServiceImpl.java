@@ -51,11 +51,11 @@ public class GitlabCommitServiceImpl implements ICommits{
         return commitsSinceUntilDates;
     }
 
-    public List<Commit> getCommitsByProjectIdAndAuthor(String projectId, String author){
+    public List<Commit> getCommitsByProjectIdAndAuthorEmail(String projectId, String authorEmail){
         List<Commit> commitListByAuthor = new ArrayList<>();
         List<Commit> projectCommits = this.getAllProjectCommits(projectId);
         for(int i = 0; i< projectCommits.size(); i++){
-            if(projectCommits.get(i).authorEmail.equals(author)){
+            if(projectCommits.get(i).authorEmail.equals(authorEmail)){
                 commitListByAuthor.add(projectCommits.get(i));
             }
         }
