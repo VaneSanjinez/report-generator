@@ -3,6 +3,7 @@ package com.td.reportgenerator.service;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.td.reportgenerator.interfaces.IProjects;
 import com.td.reportgenerator.model.Project;
+import com.td.reportgenerator.model.User;
 import com.td.reportgenerator.proxy.GitlabDataProxy;
 import com.td.reportgenerator.util.ProjectUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -78,7 +79,16 @@ public class GitlabProjectServiceImpl implements IProjects {
             System.out.println(e.getStatusCode());
             System.out.println(e.getMessage());
         }
-        ;
         return projectMembers;
+    }
+    public ResponseEntity<User[]> getUserByEmail(String email){
+        ResponseEntity<User[]> user = null;
+        try{
+            user = gitlabDataProxy.getUserByEmail(email);
+            return user;
+        }catch (HTTPException e){
+            System.out.println(e.getMessage());
+        }
+        return user;
     }
 }

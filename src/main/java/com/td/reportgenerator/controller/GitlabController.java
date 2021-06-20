@@ -3,6 +3,7 @@ package com.td.reportgenerator.controller;
 import com.td.reportgenerator.model.Branch;
 import com.td.reportgenerator.model.Commit;
 import com.td.reportgenerator.model.Project;
+import com.td.reportgenerator.model.User;
 import com.td.reportgenerator.service.GitlabBranchServiceImpl;
 import com.td.reportgenerator.service.GitlabCommitServiceImpl;
 import com.td.reportgenerator.service.GitlabProjectServiceImpl;
@@ -115,5 +116,9 @@ public class GitlabController {
         Branch branch = gitlabBranchService.getBranchById(projectId,branchName);
         return branch;
     }
-
+    @RequestMapping(value = "/users/{userEmail}", method = RequestMethod.GET)
+    public ResponseEntity<User[]> getGitlabUser(@PathVariable("userEmail") String userEmail){
+        ResponseEntity<User[]> user = gitlabProjectService.getUserByEmail(userEmail);
+        return user;
+    }
 }

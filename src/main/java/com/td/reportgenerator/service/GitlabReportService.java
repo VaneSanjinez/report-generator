@@ -39,16 +39,16 @@ public class GitlabReportService {
         gitlabReport.setProjectMember(projectMember);
 
         //report detail
-        List<ReportInfo> reportInfo = new ArrayList<>();
-        for (int i =0; i < commitsByAuthor.size();i++){
-            ReportInfo info = new ReportInfo();
-            info.setAuthorName(commitsByAuthor.get(i).getAuthorName());
-            info.setCommitDate(commitsByAuthor.get(i).getCreationDate());
-            info.setDetails(commitsByAuthor.get(i).getMessage());
-            reportInfo.add(info);
-        }
-
-        gitlabReport.setReportDetails(reportInfo);
+//        List<ReportInfo> reportInfo = new ArrayList<>();
+//        for (int i =0; i < commitsByAuthor.size();i++){
+//            ReportInfo info = new ReportInfo();
+//            info.setAuthorName(commitsByAuthor.get(i).getAuthorName());
+//            info.setCommitDate(commitsByAuthor.get(i).getCreationDate());
+//            info.setDetails(commitsByAuthor.get(i).getMessage());
+//            reportInfo.add(info);
+//        }
+//
+//        gitlabReport.setReportDetails(reportInfo);
         return gitlabReport;
     }
 }
