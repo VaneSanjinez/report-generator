@@ -1,5 +1,6 @@
 package com.td.reportgenerator.proxy;
 
+import com.td.reportgenerator.model.User;
 import com.td.reportgenerator.util.GitlabUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
@@ -174,5 +175,19 @@ public class GitlabDataProxy extends GitlabBaseProxy{
         );
         System.out.println(projectMembers);
         return projectMembers;
+    }
+
+    public ResponseEntity<User[]> getUserByEmail(String email){
+        String url = GITLAB_BASE_URL + "/users" +  "?search=" + email;
+        HttpEntity request = gitlabUtil.declareTemplate(personalToken);
+
+        ResponseEntity<User[]> user = restTemplate.exchange(
+                url,
+                HttpMethod.GET,
+                request,
+                User[].class
+        );
+        System.out.println(user);
+        return user;
     }
 }
