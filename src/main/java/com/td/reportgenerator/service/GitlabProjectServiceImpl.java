@@ -81,8 +81,8 @@ public class GitlabProjectServiceImpl implements IProjects {
         }
         return projectMembers;
     }
-    public ResponseEntity<User[]> getUserByEmail(String email){
-        ResponseEntity<User[]> user = null;
+    public User getUserByEmail(String email){
+        User user = null;
         try{
             user = gitlabDataProxy.getUserByEmail(email);
             return user;
