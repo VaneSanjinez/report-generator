@@ -117,8 +117,8 @@ public class GitlabController {
         return branch;
     }
     @RequestMapping(value = "/users/{userEmail}", method = RequestMethod.GET)
-    public ResponseEntity<User[]> getGitlabUser(@PathVariable("userEmail") String userEmail){
-        ResponseEntity<User[]> user = gitlabProjectService.getUserByEmail(userEmail);
+    public User getGitlabUser(@PathVariable("userEmail") String userEmail){
+        User user = gitlabProjectService.getUserByEmail(userEmail);
         return user;
     }
 }

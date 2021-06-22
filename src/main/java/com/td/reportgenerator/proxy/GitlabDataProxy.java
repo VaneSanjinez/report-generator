@@ -8,6 +8,9 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import java.util.Arrays;
+import java.util.List;
+
 @Component
 public class GitlabDataProxy extends GitlabBaseProxy{
 
@@ -177,7 +180,7 @@ public class GitlabDataProxy extends GitlabBaseProxy{
         return projectMembers;
     }
 
-    public ResponseEntity<User[]> getUserByEmail(String email){
+    public User getUserByEmail(String email){
         String url = GITLAB_BASE_URL + "/users" +  "?search=" + email;
         HttpEntity request = gitlabUtil.declareTemplate(personalToken);
 
@@ -187,7 +190,14 @@ public class GitlabDataProxy extends GitlabBaseProxy{
                 request,
                 User[].class
         );
-        System.out.println(user);
-        return user;
+        List<User> users = Arrays.asList(user.getBody());
+        User singleUser = new User();
+        singleUser = users.get(0);
+        System.out.println("******************");
+        System.out.println(users.get(0).getName());
+        System.out.println(users.get(0).getId());
+        System.out.println(users.get(0).getUsername());
+        System.out.println("******************");
+        return singleUser;
     }
 }
