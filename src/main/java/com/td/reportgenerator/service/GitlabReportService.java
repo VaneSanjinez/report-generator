@@ -1,9 +1,6 @@
 package com.td.reportgenerator.service;
 
-import com.td.reportgenerator.model.Commit;
-import com.td.reportgenerator.model.Project;
-import com.td.reportgenerator.model.Report;
-import com.td.reportgenerator.model.ReportInfo;
+import com.td.reportgenerator.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,35 +17,33 @@ public class GitlabReportService {
     @Autowired
     GitlabCommitServiceImpl gitlabCommitService;
 
-    public Report gitlabReport (String projectId, String authorEmail){
-        Report gitlabReport = new Report();
+    public ReportInfo getGitlabReportInfo(String email, String projectId){
+        String projectMember = gitlabProjectService.getUserByEmail(email).getName();
         Project project = gitlabProjectService.getProjectById(projectId);
-        List<Commit> commits =  gitlabCommitService.getAllProjectCommits(projectId);
-        List<Commit> commitsByAuthor = gitlabCommitService.getCommitsByProjectIdAndAuthorEmail(projectId,authorEmail);
-
-        String projectMember = commitsByAuthor.get(0).getAuthorName();
-
-        //build gitlab report
         Date today = new Date();
         today.getTime();
-        System.out.println(today.getTime());
 
-        gitlabReport.setCurrentDate(today);
-        gitlabReport.setProjectName(project.getName());
-        gitlabReport.setProjectUrl(project.getWebUrl());
-        gitlabReport.setProjectMember(projectMember);
+        ReportInfo reportInfo = new ReportInfo();
+        reportInfo.setProjectMember(projectMember);
+        reportInfo.setCurrentDate(today);
+        reportInfo.setProjectName(project.getName());
+        reportInfo.setProjectUrl(project.getWebUrl());
 
-        //report detail
-//        List<ReportInfo> reportInfo = new ArrayList<>();
-//        for (int i =0; i < commitsByAuthor.size();i++){
-//            ReportInfo info = new ReportInfo();
-//            info.setAuthorName(commitsByAuthor.get(i).getAuthorName());
-//            info.setCommitDate(commitsByAuthor.get(i).getCreationDate());
-//            info.setDetails(commitsByAuthor.get(i).getMessage());
-//            reportInfo.add(info);
-//        }
-//
-//        gitlabReport.setReportDetails(reportInfo);
-        return gitlabReport;
+        return reportInfo;
+    }
+
+    public List<ReportDetails> getGitlabReportDetails(String projectId, String authorEmail){
+        List<Commit> commitsByAuthor = gitlabCommitService.getCommitsByProjectIdAndAuthorEmail(projectId,authorEmail);
+        List<ReportDetails> reportDetails = new ArrayList<>();
+
+        for (int i =0; i < commitsByAuthor.size();i++){
+            ReportDetails details = new ReportDetails();
+            details.setCommitDate(commitsByAuthor.get(i).getCreationDate());
+            details.setDetails(commitsByAuthor.get(i).getMessage());
+            reportDetails.add(details);
+        }
+
+        return reportDetails;
+
     }
 }

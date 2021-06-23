@@ -2,6 +2,8 @@ package com.td.reportgenerator.controller;
 
 import com.td.reportgenerator.model.Commit;
 import com.td.reportgenerator.model.Report;
+import com.td.reportgenerator.model.ReportDetails;
+import com.td.reportgenerator.model.ReportInfo;
 import com.td.reportgenerator.service.GitlabCommitServiceImpl;
 import com.td.reportgenerator.service.GitlabReportService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,15 +47,33 @@ public class ReportController {
                             @PathVariable("projectId") String projectId,
                             @PathVariable("author") String author){
         Report report = new Report();
+        ReportInfo reportInfo = gitlabReportService.getGitlabReportInfo(author,projectId);
+        List<ReportDetails> reportDetails = gitlabReportService.getGitlabReportDetails(projectId,author);
+
         switch (service){
             case "gitlab":
-                report = gitlabReportService.gitlabReport(projectId, author);
+                report.setReportInfo(reportInfo);
+                report.setReportDetails(reportDetails);
                 break;
             case "github":
                 return null;
             case "bitbucket":
                 return null;
         }
+
         return report;
+    }
+    @RequestMapping(value = "/reportinfo/{projectId}/{author}", method = RequestMethod.GET)
+    public ReportInfo getReportInfo(@PathVariable("projectId") String projectId,
+                                    @PathVariable("author") String author){
+        ReportInfo reportInfo = gitlabReportService.getGitlabReportInfo(author, projectId);
+        return reportInfo;
+    }
+
+    @RequestMapping(value = "reportdetails/{projectId}/{author}", method = RequestMethod.GET)
+    public List<ReportDetails> getReportDetails(@PathVariable("projectId") String projectId,
+                                                @PathVariable("author") String author){
+        List<ReportDetails> reportDetails = gitlabReportService.getGitlabReportDetails(projectId, author);
+        return reportDetails;
     }
 }

@@ -3,61 +3,50 @@ package com.td.reportgenerator.model;
 import java.util.Date;
 
 public class ReportInfo {
+    public String projectName;
+    public String projectUrl;
+    public Date currentDate;
+    public String projectMember;
 
-    public Date commitDate;
-    public int hours;
-    public String authorName;
-    public String details;
-    public int percent;
+    public ReportInfo(String projectName, String projectUrl, Date currentDate, String projectMember) {
+        this.projectName = projectName;
+        this.projectUrl = projectUrl;
+        this.currentDate = currentDate;
+        this.projectMember = projectMember;
+    }
 
     public ReportInfo() {
     }
 
-    public ReportInfo(Date commitDate, int hours, String authorName, String details, int percent) {
-        this.commitDate = commitDate;
-        this.hours = hours;
-        this.authorName = authorName;
-        this.details = details;
-        this.percent = percent;
+    public String getProjectName() {
+        return projectName;
     }
 
-    public Date getCommitDate() {
-        return commitDate;
+    public void setProjectName(String projectName) {
+        this.projectName = projectName;
     }
 
-    public void setCommitDate(Date commitDate) {
-        this.commitDate = commitDate;
+    public String getProjectUrl() {
+        return projectUrl;
     }
 
-    public int getHours() {
-        return hours;
+    public void setProjectUrl(String projectUrl) {
+        this.projectUrl = projectUrl;
     }
 
-    public void setHours(int hours) {
-        this.hours = hours;
+    public Date getCurrentDate() {
+        return currentDate;
     }
 
-    public String getAuthorName() {
-        return authorName;
+    public void setCurrentDate(Date currentDate) {
+        this.currentDate = currentDate;
     }
 
-    public void setAuthorName(String authorName) {
-        this.authorName = authorName;
+    public String getProjectMember() {
+        return projectMember;
     }
 
-    public String getDetails() {
-        return details;
-    }
-
-    public void setDetails(String details) {
-        this.details = details;
-    }
-
-    public int getPercent() {
-        return percent;
-    }
-
-    public void setPercent(int percent) {
-        this.percent = percent;
+    public void setProjectMember(String projectMember) {
+        this.projectMember = projectMember;
     }
 }
