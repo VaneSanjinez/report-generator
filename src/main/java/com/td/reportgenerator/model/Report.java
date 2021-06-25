@@ -4,60 +4,30 @@ import java.util.Date;
 import java.util.List;
 
 public class Report {
-    public String projectName;
-    public String projectUrl;
-    public Date currentDate;
-    public String projectMember;
-    List<ReportInfo> reportDetails;
+    public ReportInfo reportInfo;
+    public List<ReportDetails> reportDetails;
 
-    public Report(String projectName, String projectUrl, Date currentDate, String projectMember, List<ReportInfo> reportDetails) {
-        this.projectName = projectName;
-        this.projectUrl = projectUrl;
-        this.currentDate = currentDate;
-        this.projectMember = projectMember;
+    public Report(ReportInfo reportInfo, List<ReportDetails> reportDetails) {
+        this.reportInfo = reportInfo;
         this.reportDetails = reportDetails;
     }
 
     public Report() {
     }
 
-    public String getProjectName() {
-        return projectName;
+    public ReportInfo getReportInfo() {
+        return reportInfo;
     }
 
-    public void setProjectName(String projectName) {
-        this.projectName = projectName;
+    public void setReportInfo(ReportInfo reportInfo) {
+        this.reportInfo = reportInfo;
     }
 
-    public String getProjectUrl() {
-        return projectUrl;
-    }
-
-    public void setProjectUrl(String projectUrl) {
-        this.projectUrl = projectUrl;
-    }
-
-    public Date getCurrentDate() {
-        return currentDate;
-    }
-
-    public void setCurrentDate(Date currentDate) {
-        this.currentDate = currentDate;
-    }
-
-    public String getProjectMember() {
-        return projectMember;
-    }
-
-    public void setProjectMember(String projectMember) {
-        this.projectMember = projectMember;
-    }
-
-    public List<ReportInfo> getReportDetails() {
+    public List<ReportDetails> getReportDetails() {
         return reportDetails;
     }
 
-    public void setReportDetails(List<ReportInfo> reportDetails) {
+    public void setReportDetails(List<ReportDetails> reportDetails) {
         this.reportDetails = reportDetails;
     }
 }
