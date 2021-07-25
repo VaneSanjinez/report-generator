@@ -76,11 +76,4 @@ public class ReportController {
         List<ReportDetails> reportDetails = gitlabReportService.getGitlabReportDetails(projectId, author);
         return reportDetails;
     }
-
-    @RequestMapping(value="gitlab/{projectId}/{authorName}", method = RequestMethod.GET)
-    public List<Commit> getCommitsByAuthorName(@PathVariable("projectId") String projectId,
-                                               @PathVariable("authorName") String authorName){
-        List<Commit> authorNameCommits = gitlabCommitService.getCommitsByProjectIdAndAuthorName(projectId, authorName);
-        return authorNameCommits;
-    }
 }

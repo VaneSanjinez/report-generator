@@ -101,6 +101,15 @@ public class GitlabController {
         }
         return commitsResponse;
     }
+
+    //Get commits by author Name
+    @RequestMapping(value="/{projectId}/{authorName}", method = RequestMethod.GET)
+    public List<Commit> getCommitsByAuthorName(@PathVariable("projectId") String projectId,
+                                               @PathVariable("authorName") String authorName){
+        List<Commit> authorNameCommits = gitlabCommitService.getCommitsByProjectIdAndAuthorName(projectId, authorName);
+        return authorNameCommits;
+    }
+
     //branch controller
     //Get all branches from project
     @RequestMapping(value = "/projects/{projectId}/branches", method = RequestMethod.GET)
