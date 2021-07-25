@@ -33,7 +33,8 @@ public class GitlabReportService {
     }
 
     public List<ReportDetails> getGitlabReportDetails(String projectId, String authorEmail){
-        List<Commit> commitsByAuthor = gitlabCommitService.getCommitsByProjectIdAndAuthorEmail(projectId,authorEmail);
+//        List<Commit> commitsByAuthor = gitlabCommitService.getCommitsByProjectIdAndAuthorEmail(projectId,authorEmail);
+        List<Commit> commitsByAuthor = gitlabCommitService.getCommitsByProjectIdAndAuthorName(projectId,authorEmail);
         List<ReportDetails> reportDetails = new ArrayList<>();
 
         for (int i =0; i < commitsByAuthor.size();i++){
