@@ -6,6 +6,7 @@ import com.td.reportgenerator.model.ReportDetails;
 import com.td.reportgenerator.model.ReportInfo;
 import com.td.reportgenerator.service.GitlabCommitServiceImpl;
 import com.td.reportgenerator.service.GitlabReportService;
+import com.td.reportgenerator.util.ReportUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,6 +24,9 @@ public class ReportController {
 
     @Autowired
     GitlabReportService gitlabReportService;
+
+    @Autowired
+    ReportUtil reportUtil;
 
     @RequestMapping(value="/report", method = RequestMethod.GET)
     public Report getTodayReport(){
@@ -75,5 +79,19 @@ public class ReportController {
                                                 @PathVariable("author") String author){
         List<ReportDetails> reportDetails = gitlabReportService.getGitlabReportDetails(projectId, author);
         return reportDetails;
+    }
+
+    @RequestMapping(value= "report/export/{projectId}/{author}", method = RequestMethod.GET)
+    public void exportReport(@PathVariable("projectId") String projectId,
+                             @PathVariable("author") String author){
+        Report report = new Report();
+        ReportInfo reportInfo = gitlabReportService.getGitlabReportInfo(author,projectId);
+        List<ReportDetails> reportDetails = gitlabReportService.getGitlabReportDetails(projectId,author);
+
+        report.setReportInfo(reportInfo);
+        report.setReportDetails(reportDetails);
+
+        ReportUtil.exportReport(report);
+
     }
 }
