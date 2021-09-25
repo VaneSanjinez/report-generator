@@ -38,6 +38,7 @@ public class ReportUtil {
     }
 
     public static void exportReport(Report report){
+        String fileName = report.getReportInfo().getProjectMember();
         List<ReportDetails> rd = report.getReportDetails();
         ReportInfo ri = report.getReportInfo();
 
@@ -55,10 +56,14 @@ public class ReportUtil {
         content = content +  "," + ri.getProjectMember();
         content = content +  "," + ri.getCurrentDate();
 
-        writeToFile("C:\\Users\\vanessa.sanjinez\\Documents\\", "rep5", content);
+//        writeToFile("C:\\Users\\vanessa.sanjinez\\Documents\\", fileName + "11", content);
 
-//        for(ReportDetails reportDetails: rd){
-//            content = content + ",";
-//        }
+        for(ReportDetails reportDetails: rd){
+            content = content + reportDetails.getCommitDate() +  ",";
+            content = content + reportDetails.getDetails();
+            content = content + "\n";
+        }
+
+        writeToFile("C:\\Users\\vanessa.sanjinez\\Documents\\", fileName + "13", content);
     }
 }
