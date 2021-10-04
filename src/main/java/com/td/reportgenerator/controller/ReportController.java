@@ -81,7 +81,7 @@ public class ReportController {
         return reportDetails;
     }
 
-    @RequestMapping(value= "report/export/{projectId}/{author}", method = RequestMethod.GET)
+    @RequestMapping(value= "export/{projectId}/{author}", method = RequestMethod.GET)
     public void exportReport(@PathVariable("projectId") String projectId,
                              @PathVariable("author") String author){
         Report report = new Report();
@@ -90,6 +90,7 @@ public class ReportController {
 
         report.setReportInfo(reportInfo);
         report.setReportDetails(reportDetails);
+
 
         ReportUtil.exportReport(report);
 
